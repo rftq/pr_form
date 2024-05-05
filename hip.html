@@ -10,7 +10,7 @@
   <link rel="stylesheet" type="text/css" href="msfmultiselect.css" />
   <script src="msfmultiselect.js"></script>
   <script type="text/javascript" src="autorep.js"></script>
-  <script type="text/javascript" src="http://yastatic.net/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
 
 
 
@@ -41,6 +41,7 @@
       document.getElementById(show).select();
       document.execCommand('copy');
     }
+
 
 
 
@@ -110,9 +111,8 @@
       </div>
       <br>
 
-
       <textarea variable="yname" id="show" class="mytextarea" rows="18" cols="46"></textarea>
-
+    
       <li class="buttons">
         <input id="saveForm" class="my_btn-new" type="submit" name="submit" value="Вывод" onclick="testVariable()" />
         <input type="button" class="my_btn-new" value="Скопировать" onclick="copy_to_clipboard('show');">
@@ -146,8 +146,6 @@
       autoHide: false
     }
   )
-
-
 
 </script>
 
