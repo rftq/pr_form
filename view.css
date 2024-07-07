@@ -6,7 +6,12 @@ body {
 	text-align: center;
 }
 
-
+p {
+	font-size: 16px;
+	text-align: left;
+	word-wrap: break-word;
+	display: inline;
+}
 
 
 /* #form_container
@@ -64,25 +69,32 @@ body {
 #form_item_1 {
 	margin-left: 20px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	text-align: left;
 	background: #FFF3E4;
 	box-shadow: 1px 3px 5px #393939;
 }
 
 #form_item_2 {
-	margin-left: 780px;
+	margin-left: 20px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	text-align: center;
 	background: #fff;
 	padding: 10px;
 	height: 30%;
-	font-size: 18px;
+	font-size: 16px;
 	box-shadow: 1px 3px 5px #393939;
-	position: fixed;
-	min-height: 540px;
+	/* position: fixed; */
+	min-height: 600px;
+	max-width: 474px;
 }
 
-
+.mydiv {
+	border: 1px black solid;
+	text-align: left;
+	max-width: 464px;
+}
 
 
 /* My navi 1*/
@@ -172,7 +184,7 @@ body {
 
 
 .mytextarea {
-	font-size: 14px;
+	font-size: 16px;
 	font-family: Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
 	/* font-family: 'Times New Roman', Times, serif */
 }
@@ -188,6 +200,7 @@ body {
     box-shadow: 0 5px 0 #003CC5;
 	font-size: 24px;
 	padding: 8px 20px;
+	/* margin: 14px; */
 }
 
 .my_btn-new:hover {
@@ -198,7 +211,11 @@ body {
 }
 
 
-
+.pole {
+	font-size: 30px;
+	/* width: 260px; */
+	margin-top: 10px;
+}
 
 
 #top {
