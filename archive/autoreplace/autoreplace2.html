@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система сокращений</title>
+    <style>
+        /* Стили остаются такими же */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+        }
+        textarea, input, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .abbreviation-list {
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .abbreviation-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            padding: 2px 5px;
+        }
+        .import-export {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .file-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML структура остается такой же -->
+    <h1>Система сокращений</h1>
+    
+    <div class="container">
+        <div class="column">
+            <h2>Добавить сокращение</h2>
+            <input type="text" id="abbrInput" placeholder="Сокращение (например, 'пж')">
+            <input type="text" id="phraseInput" placeholder="Полная фраза (например, 'пожалуйста')">
+            <button id="addBtn">Добавить</button>
+            
+            <h2>Мои сокращения</h2>
+            <div id="abbreviationList" class="abbreviation-list"></div>
+
+            <div class="import-export">
+                <h2>Импорт/Экспорт</h2>
+                <button id="exportBtn">Экспорт сокращений</button>
+                <button id="importBtn">Импорт сокращений</button>
+                <input type="file" id="fileInput" class="file-input" accept=".json">
+            </div>
+        </div>
+        
+        <div class="column">
+            <h2>Текстовое поле</h2>
+            <textarea id="textInput" rows="10" placeholder="Введите текст здесь... Ваши сокращения будут автоматически заменяться."></textarea>
+            <button id="replaceBtn">Заменить все сокращения</button>
+        </div>
+    </div>
+
+    <script>
+        // Загрузка сокращений из localStorage
+        let abbreviations = JSON.parse(localStorage.getItem('abbreviations')) || {};
+        
+        // Элементы DOM
+        const abbrInput = document.getElementById('abbrInput');
+        const phraseInput = document.getElementById('phraseInput');
+        const addBtn = document.getElementById('addBtn');
+        const abbrList = document.getElementById('abbreviationList');
+        const textInput = document.getElementById('textInput');
+        const replaceBtn = document.getElementById('replaceBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const importBtn = document.getElementById('importBtn');
+        const fileInput = document.getElementById('fileInput');
+        
+        // Отображение списка сокращений
+        function renderAbbreviations() {
+            abbrList.innerHTML = '';
+            
+            for (const [abbr, phrase] of Object.entries(abbreviations)) {
+                const item = document.createElement('div');
+                item.className = 'abbreviation-item';
+                
+                const text = document.createElement('span');
+                text.textContent = `${abbr} → ${phrase}`;
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '×';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = () => deleteAbbreviation(abbr);
+                
+                item.appendChild(text);
+                item.appendChild(deleteBtn);
+                abbrList.appendChild(item);
+            }
+        }
+        
+        // Добавление нового сокращения
+        function addAbbreviation() {
+            const abbr = abbrInput.value.trim();
+            const phrase = phraseInput.value.trim();
+            
+            if (abbr && phrase) {
+                abbreviations[abbr] = phrase;
+                saveAbbreviations();
+                
+                abbrInput.value = '';
+                phraseInput.value = '';
+                
+                renderAbbreviations();
+            } else {
+                alert('Пожалуйста, заполните оба поля!');
+            }
+        }
+        
+        // Сохранение сокращений в localStorage
+        function saveAbbreviations() {
+            localStorage.setItem('abbreviations', JSON.stringify(abbreviations));
+        }
+        
+        // Удаление сокращения
+        function deleteAbbreviation(abbr) {
+            delete abbreviations[abbr];
+            saveAbbreviations();
+            renderAbbreviations();
+        }
+        
+        // Замена сокращений в тексте
+        function replaceAbbreviations() {
+            let text = textInput.value;
+            const cursorPos = textInput.selectionStart;
+            
+            // Сортируем сокращения по длине (от самых длинных к самым коротким)
+            const sortedAbbrs = Object.keys(abbreviations).sort((a, b) => b.length - a.length);
+            
+            for (const abbr of sortedAbbrs) {
+                // Создаем регулярное выражение для поиска целого слова
+                const regex = new RegExp(`(^|\\s)${escapeRegExp(abbr)}(?=\\s|$|[.,!?])`, 'gi');
+                text = text.replace(regex, `$1${abbreviations[abbr]}`);
+            }
+            
+            textInput.value = text;
+            // Восстанавливаем позицию курсора в конце текста
+            textInput.selectionStart = text.length;
+            textInput.selectionEnd = text.length;
+        }
+        
+        // Экранирование специальных символов для регулярных выражений
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        
+        // Экспорт сокращений в JSON файл
+        function exportAbbreviations() {
+            const data = JSON.stringify(abbreviations, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'сокращения.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Импорт сокращений из JSON файла
+        function importAbbreviations(file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    
+                    if (typeof imported !== 'object' || imported === null) {
+                        throw new Error('Неверный формат файла');
+                    }
+                    
+                    // Полностью заменяем текущие сокращения
+                    abbreviations = imported;
+                    saveAbbreviations();
+                    renderAbbreviations();
+                    alert(`Успешно импортировано ${Object.keys(imported).length} сокращений`);
+                    
+                    // Принудительно запускаем замену в текстовом поле
+                    replaceAbbreviations();
+                } catch (error) {
+                    alert(`Ошибка импорта: ${error.message}`);
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Автозамена при вводе (с задержкой)
+        let replaceTimeout;
+        textInput.addEventListener('input', () => {
+            clearTimeout(replaceTimeout);
+            replaceTimeout = setTimeout(() => {
+                replaceAbbreviations();
+            }, 500);
+        });
+        
+        // Обработчики событий
+        addBtn.addEventListener('click', addAbbreviation);
+        replaceBtn.addEventListener('click', replaceAbbreviations);
+        exportBtn.addEventListener('click', exportAbbreviations);
+        importBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                importAbbreviations(e.target.files[0]);
+                fileInput.value = ''; // Сброс значения для повторного выбора того же файла
+            }
+        });
+        
+        // Инициализация
+        renderAbbreviations();
+    </script>
+</body>
+</html>

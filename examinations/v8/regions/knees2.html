@@ -1,0 +1,531 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Коленный сустав</title>
+  <link rel="stylesheet" type="text/css" href="../view.css" media="all">
+  <script type="text/javascript" src="../view.js"></script>
+  <link rel="stylesheet" type="text/css" href="../msfmultiselect.css" />
+  <script src="../msfmultiselect.js"></script>
+
+
+
+
+
+  <script>
+    function testVariable() {
+      debugger
+
+
+
+      let result_list = [];
+      if (document.getElementById("list").length > 0) {
+        for (let i = 0; i < document.getElementById("list").length; i++) {
+          let option = document.getElementById("list").options[i];
+          if (option.selected) {
+            result_list += option.value;
+          }
+        }
+      }
+
+
+      let proekcia = "На обзорных рентгенограммах правого коленного сустава в двух проекциях ";
+      let kong = "Суставные поверхности конгруэнтные. ";
+      let kti = "рентген-признаков костных травматических и деструктивных изменений не выявлено. ";
+      let min = "Минеральная плотность костей не снижена. ";
+      let vys = "Высота рентгеновской суставной щели ";
+      let vysMedP = "в медиальном отделе правого коленного сустава";
+      let vysMedL = "в медиальном отделе левого коленного сустава";
+      let sub = "";
+      let subMedP = "медиального мыщелка ";
+      let subMedL = "медиального мыщелка ";
+      let bbR = "большеберцовой кости";
+      let bbL = "большеберцовой кости";
+      let kray = "Краевые костные разрастания ";
+      let med = "";
+      let zao = "Заострение ";
+      let zaoR = "";
+      let zaoL = "";
+      let conclusion = "dfd";
+      let abz = String.fromCharCode(13, 10);
+
+
+      const proekciaList = {
+        левый2: "На обзорных рентгенограммах левого коленного сустава в двух проекциях",
+        оба1: "На обзорных рентгенограммах правого и левого коленных суставов в прямой проекции",
+        оба2: "На обзорных рентгенограммах правого и левого коленных суставов в двух проекциях",
+      };
+
+      const minList = {
+        млег: "Минеральная плотность костей легко снижена",
+        мум: "Минеральная плотность костей умеренно снижена",
+        мин: "Минеральная плотность костей снижена",
+        мивыр: "Минеральная плотность костей выражено снижена",
+      };
+
+      const vysList = {
+        вым1: "минимально снижена",
+        выум1: "умеренно снижена",
+        выс1: "снижена",
+        вывыр1: "выражено снижена",
+      };
+
+      const vysList2 = {
+        вым2: "минимально снижена",
+        выум2: "умеренно снижена",
+        выс2: "снижена",
+        вывыр2: "выражено снижена",
+      }
+
+      const subList = {
+        подч1: "Подчёркнута суставная поверхность",
+        упл1: "Уплотнение суставной поверхности",
+        субх1: "Субхондральный склероз",
+        уплощ1: "уплощение",
+        деф1: "деформация",
+      };
+
+      const subList2 = {
+        подч2: "подчёркнута суставная поверхность",
+        упл2: "уплотнение суставной поверхности",
+        субх2: "субхондральный склероз",
+        уплощ2: "уплощение",
+        деф2: "деформация",
+      }
+
+      const krayListR = {
+        крми1: "минимальные",
+        крви1: "визуализируются",
+        крум1: "умеренные",
+        крвы1: "выраженные",
+      };
+
+      const krayListL = {
+        крми2: "минимальные",
+        крви2: "визуализируются",
+        крум2: "умеренные",
+        крвы2: "выраженные",
+      };
+
+      const zaoListR = {
+        меж1: "межмыщелковых возвышений",
+        ммж1: "медиального межмыщелкового возвышения",
+        надк1: "по краям надколенника",
+      };
+
+      const zaoListL = {
+        меж2: "межмыщелковых возвышений",
+        ммж2: "медиального межмыщелкового возвышения",
+        надк2: "по краям надколенника",
+      };
+
+      const conclusionList = {
+        //
+      }
+
+
+
+
+      if (pole.value.includes("мед")) {
+        vysMedP = "в правом коленном суставе";
+        vysMedL = "в левом коленном суставе";
+        subMedP = '';
+        subMedL = '';
+      }
+
+      if (pole.value.includes("бедп")) {
+        bbR = "большеберцовой, бедренной костей";
+      }
+      if (pole.value.includes("бедл")) {
+        bbL = "большеберцовой, бедренной костей";
+      }
+
+
+      // select proekcia
+      for (let key in proekciaList) {
+        if (result_list.includes(key)) {
+          proekcia = proekciaList[key] + ' ';
+        }
+      }
+      // input proekcia
+      for (let key in proekciaList) {
+        if (pole.value.includes(key)) {
+          proekcia = proekciaList[key] + ' ';
+        }
+      }
+
+      // select min
+      for (let key in minList) {
+        if (result_list.includes(key)) {
+          min = minList[key] + '. ';
+        }
+      }
+      // input min
+      for (let key in minList) {
+        if (pole.value.includes(key)) {
+          min = minList[key] + '. ';
+        }
+      }
+
+
+
+      // select vys
+      for (let key in vysList) {
+        if (result_list.includes(key)) {
+          vys += vysList[key] + ' ' + vysMedP + ', ';
+        }
+      }
+
+      for (let key in vysList2) {
+        if (result_list.includes(key)) {
+          vys += vysList2[key] + ' ' + vysMedL + ', ';
+        }
+      }
+
+      if (vys == "Высота рентгеновской суставной щели ") {
+          vys += "не снижена. "
+        }
+
+      vys = vys.replace(/,(?![^,]*,)/m, '.');
+
+
+
+      // select sub
+      for (let key in subList) {
+        if (result_list.includes(key)) {
+          sub += subList[key] + ", ";
+        }
+      }
+
+      sub = sub.replace(/,(?![^,]*,)/m, '');
+      sub += subMedP + bbR + " правого коленного сустава" + ", ";
+
+      for (let key in subList2) {
+        if (result_list.includes(key)) {
+          sub += subList2[key]  + ", ";
+        }
+      }
+      sub = sub.replace(/,(?![^,]*,)/m, '');
+      sub += subMedL + bbL + " левого коленного сустава" + ", ";
+
+      // input sub
+      for (let key in subList) {
+        if (pole.value.includes(key)) {
+          sub += subList[key] + ' ';
+        }
+      }
+
+      sub = sub.replace(/,(?![^,]*,)/m, '.');
+      sub = sub.charAt(0).toUpperCase() + sub.slice(1);
+
+      if (sub == "Медиального мыщелка большеберцовой кости правого коленного сустава медиального мыщелка большеберцовой кости левого коленного сустава. ") {
+        sub = '';
+      }
+
+
+
+
+      // select kray
+      for (let key in krayListR) {
+        if (result_list.includes(key)) {
+          kray += krayListR[key] + " в правом коленном суставе, ";
+        }
+      }
+
+      for (let key in krayListL) {
+        if (result_list.includes(key)) {
+          kray += krayListL[key] + " в левом коленном суставе, ";
+        }
+      }
+
+      kray = kray.replace(/,(?![^,]*,)/m, '.');
+
+      if (kray == "Краевые костные разрастания ") {
+        kray = '';
+      }
+
+
+
+
+      // select zao
+      for (let key in zaoListR) {
+        if (result_list.includes(key)) {
+          zao += zaoListR[key] + ", ";
+          zaoR = "правого коленного сустава,"
+        }
+      }
+      zao = zao.replace(/,(?![^,]*,)/m, '');
+        zao += zaoR;
+        zao = zao.replace(/,(?![^,]*,)/m, ', ');
+    
+
+      for (let key in zaoListL) {
+        if (result_list.includes(key)) {
+          zao += zaoListL[key] + ", ";
+          zaoL = "левого коленного сустава,"
+        }
+      }
+
+      zao = zao.replace(/,(?![^,]*,)/m, '');
+      zao += zaoL;
+      zao = zao.replace(/,(?![^,]*,)/m, '. ');
+
+      if (zao == "Заострение ") {
+        zao = '';
+      }
+
+
+
+
+      // conclusion = ["рентген-признаки", "начальных проявлений остеоартроза", "остеоартроза", "-", "правого", "левого", "коленного сустава", "правого и левого", "коленных суставов", "I", "II", "III", "IV", "стадии (по Kellgren J.H., Lawrence J.S.)", "рентген-признаков патологических изменений", "не выявлено"]
+
+
+      // не работает перенос строки
+      // document.getElementById("show").innerText = proekcia + kti + kong + min + vys + sub + kray + zao + conclusion;
+
+      document.getElementById("show").value = proekcia + kti + kong + min + vys + sub + kray + zao + conclusion + abz + abz;
+
+
+
+
+
+
+
+
+
+
+      let input = document.getElementById("pole");
+      input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("saveForm").click();
+        }
+      });
+
+
+    }
+
+
+    function copy_to_clipboard(show) {
+      document.getElementById(show).select();
+      document.execCommand('copy');
+    }
+
+  
+
+
+
+
+  </script>
+
+
+
+
+
+</head>
+
+<body id="main_body">
+
+  <div id="form_container">
+
+    <div id="form_item_1">
+
+
+      <form id="form_48871" class="appnitro" method="post" action="">
+        <div class="form_description">
+          <h2>Коленный сустав</h2>
+          <p><!-- description --></p>
+        </div>
+
+        <div class="my_container">
+
+
+          <div class="my_card">
+            <select class="form-control" id="list" name="list" multiple>
+              <option>------ПРОЕКЦИЯ------</option>
+              <option value="левый2">левый в двух</option>
+              <option value="оба1">правый и левый в прямой</option>
+              <option value="оба2">правый и левый в двух</option>
+
+              <option>------МИНЕРАЛЬНАЯ------</option>
+              <option value="млег">легко снижена</option>
+              <option value="мум">умеренно снижена</option>
+              <option value="мин">снижена</option>
+              <option value="мивыр">выражено снижена</option>
+
+              <option>------ВЫСОТА ПРАВОГО------</option>
+              <option value="вым1">минимально снижена</option>
+              <option value="выум1">умеренно снижена</option>
+              <option value="выс1">снижена</option>
+              <option value="вывыр1">выражено снижена</option>
+
+              <option>------ВЫСОТА ЛЕВОГО------</option>
+              <option value="вым2">минимально снижена</option>
+              <option value="выум2">умеренно снижена</option>
+              <option value="выс2">снижена</option>
+              <option value="вывыр2">выражено снижена</option>
+
+              <option>---СУБХ СКЛЕРОЗ ПРАВОГО---</option>
+              <option value="субх1">субхондральный склероз</option>
+              <option value="подч1">подчёркнута</option>
+              <option value="упл1">уплотнение</option>
+              <option value="уплощ1">уплощение</option>
+              <option value="деф1">деформация</option>
+
+              <option>---СУБХ СКЛЕРОЗ ЛЕВОГО---</option>
+              <option value="субх2">субхондральный склероз</option>
+              <option value="упл2">уплотнение</option>
+              <option value="подч2">подчёркнута</option>
+              <option value="уплощ2">уплощение</option>
+              <option value="деф2">деформация</option>
+
+              <option disabled>----КРАЕВЫЕ ПРАВОГО----</option>
+              <option value="крми1">минимальные</option>
+              <option value="крум1">умеренные</option>
+              <option value="крви1">визуализируются</option>
+              <option value="крвы1">выраженные</option>
+              <option disabled>----КРАЕВЫЕ ЛЕВОГО----</option>
+              <option value="крми2">минимальные</option>
+              <option value="крум2">умеренные</option>
+              <option value="крви2">визуализируются</option>
+              <option value="крвы2">выраженные</option>
+              
+              <option disabled>~ЗАОСТРЕНИЯ правого</option>
+              <option value="меж1">межмыщелковых</option>
+              <option value="ммж1">мед межмыщелкового</option>
+              <option value="надк1">по краям надколенника</option>
+              <option disabled>~ЗАОСТРЕНИЯ левого</option>
+              <option value="меж2">межмыщелковых</option>
+              <option value="ммж2">мед межмыщелкового</option>
+              <option value="надк2">по краям надколенника</option>
+
+              <option disabled>~ЗАКЛЮЧЕНИЕ~</option>
+              <option value="nach">начальные проявления</option>
+              <option value="I">I стадии</option>
+              <option value="II">II стадии</option>
+              <option value="III">III стадии</option>
+              <option value="IV">IV стадии</option>
+              <option value="diff">правого II, левого III</option>
+            </select>
+          </div>
+
+        </div>
+
+
+
+
+
+
+      </form>
+
+
+
+    </div>
+
+
+
+
+
+    <div id="form_item_2">
+
+
+      <div class="page">
+        <nav class="page__menu menu">
+          <ul class="menu__list r-list">
+            <li class="menu__group"><a href="thorax.html" class="menu__link r-link text-underlined">ОГК</a></li>
+            <li class="menu__group"><a href="knee.html" class="menu__link r-link text-underlined">КОЛ</a></li>
+            <li class="menu__group"><a href="ankle.html" class="menu__link r-link text-underlined">ГОЛ</a></li>
+            <li class="menu__group"><a href="hip.html" class="menu__link r-link text-underlined">ТБС</a></li>
+            <li class="menu__group"><a href="wrist.html" class="menu__link r-link text-underlined">ЛУЧ</a></li>
+          </ul>
+          <ul class="menu__list r-list">
+            <li class="menu__group"><a href="shoulder.html" class="menu__link r-link text-underlined">ПЛЕЧ</a></li>
+            <li class="menu__group"><a href="cervicalis.html" class="menu__link r-link text-underlined">ШОП</a></li>
+            <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">ГОП</a></li>
+            <li class="menu__group"><a href="lumbalis.html" class="menu__link r-link text-underlined">ПОП</a></li>
+          </ul>
+        </nav>
+      </div>
+      <br>
+
+
+      <li class="buttons">
+        <input type="hidden" name="form_id" value="48871" />
+      </li>
+
+
+
+
+
+
+      <textarea variable="yname" id="show" class="mytextarea" rows="15" cols="60"></textarea><br>
+
+
+
+
+      <input class="pole" id="pole" />
+
+      <li class="buttons">
+        <input id="saveForm" class="my_btn-new" type="submit" name="submit" value="Вывод" onclick="testVariable()" />
+        <input type="button" class="my_btn-new" value="Скопировать" onclick="copy_to_clipboard('show');">
+      </li>
+
+
+
+
+      <div class="myDivParentWrapper">
+        <div class="myDivParent">
+          <div class="myDivChild">
+          <li>мед - убрать медиальных</li>
+          <li>бедп - добавить правой бедренной</li>
+          <li>бедл - добавить левой бедренной</li>
+        </div>
+      </div>
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+  </div>
+
+
+
+</body>
+
+<script>
+
+  var list = new MSFmultiSelect(
+    document.querySelector('#list'),
+    {
+      theme: 'theme2',
+      selectAll: true,
+      searchBox: true,
+      width: '500px',
+      height: '80px',
+      // readOnly:true,
+      onChange: function (checked, value, instance) {
+        console.log(checked, value, instance);
+      },
+      // appendTo: '#myselect',
+      autoHide: false
+    }
+  );
+
+
+
+</script>
+
+
+
+</html>

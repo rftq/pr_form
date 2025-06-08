@@ -1,0 +1,696 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Грудная клетка</title>
+<link rel="stylesheet" type="text/css" href="view.css" media="all">
+<script type="text/javascript" src="view.js"></script>
+
+
+
+
+
+
+<script>
+        function testVariable() {
+            debugger
+            <!-- var strText = document.getElementById("element_1").value; -->
+            <!-- var strText1 = document.getElementById("element_2").value; -->
+			<!-- var strMult4 = document.getElementById("li_4").value; -->
+
+            <!-- document.getElementById("p1").innerHTML = strText; -->
+            <!-- document.getElementById("p2").innerHTML = strText1; -->
+			
+			
+			
+			<!-- let proekcia = document.getElementsByName('proekcia'); -->
+            <!-- let result_proekcia = ""; -->
+            <!-- for (var i = 0; i < proekcia.length; i++) { -->
+                <!-- if (proekcia[i].checked) { -->
+                    <!-- result_proekcia = proekcia[i].value;	 -->
+                <!-- } -->
+            <!-- } -->
+			
+			
+			
+			let result_proekcia = ""
+			if (document.getElementById("proekcia").length > 0) {
+                for (let i=0; i < document.getElementById("proekcia").length; i++){
+                    let option = document.getElementById("proekcia").options[i];
+					  if (option.selected) {
+                        result_proekcia = option.value;
+                    }
+                }
+            }	
+			
+			
+			
+			let risunok =
+                document.getElementsByName('risunok');
+            let result_risunok = "";
+            for (var i = 0; i < risunok.length; i++) {
+                if (risunok[i].checked) {
+                    result_risunok = risunok[i].value + " ";
+                }
+            }
+			
+			
+			
+			let result_zaschet = ""
+			if (document.getElementById("zaschet").length > 0) {
+                for (let i=0; i < document.getElementById("zaschet").length; i++){
+                    let option = document.getElementById("zaschet").options[i];
+					  if (option.selected) {
+                        result_zaschet += option.value + ", ";
+                    }
+                }
+            }
+			
+
+				
+				
+			let result_korni = ""
+			if (document.getElementById("korni").length > 0) {
+                for (let i=0; i < document.getElementById("korni").length; i++){
+                    let option = document.getElementById("korni").options[i];
+					  if (option.selected) {
+                        result_korni += option.value + ", ";
+                    }
+                }
+            }
+			
+			
+			let result_polya = ""
+			if (document.getElementById("polya").length > 0) {
+                for (let i=0; i < document.getElementById("polya").length; i++){
+                    let option = document.getElementById("polya").options[i];
+					  if (option.selected) {
+                        result_polya += option.value + ", ";
+                    }
+                }
+            }
+
+
+
+
+
+			let result_kupol = ""
+			if (document.getElementById("kupol").length > 0) {
+                for (let i=0; i < document.getElementById("kupol").length; i++){
+                    let option = document.getElementById("kupol").options[i];
+					  if (option.selected) {
+                        result_kupol += option.value + ", ";
+                    }
+                }
+            }
+			
+			
+		
+
+			let result_sinus = ""
+			if (document.getElementById("sinus").length > 0) {
+                for (let i=0; i < document.getElementById("sinus").length; i++){
+                    let option = document.getElementById("sinus").options[i];
+					  if (option.selected) {
+                        result_sinus += option.value + ", ";
+                    }
+                }
+            }		
+			
+
+
+			let result_cardio = ""
+			if (document.getElementById("cardio").length > 0) {
+                for (let i=0; i < document.getElementById("cardio").length; i++){
+                    let option = document.getElementById("cardio").options[i];
+					  if (option.selected) {
+                        result_cardio = option.value + ". ";
+                    }
+                }
+            }	
+			
+			
+
+			let result_aorta = ""
+			if (document.getElementById("aorta").length > 0) {
+                for (let i=0; i < document.getElementById("aorta").length; i++){
+                    let option = document.getElementById("aorta").options[i];
+					  if (option.selected) {
+                        result_aorta = option.value + ". ";
+                    }
+                }
+            }	
+			
+			
+			
+			let result_bones = ""
+			if (document.getElementById("bones").length > 0) {
+                for (let i=0; i < document.getElementById("bones").length; i++){
+                    let option = document.getElementById("bones").options[i];
+					  if (option.selected) {
+                        result_bones += option.value + ", ";
+                    }
+                }
+            }	
+			
+			
+			
+
+			let result_add = ""
+			if (document.getElementById("add").length > 0) {
+                for (let i=0; i < document.getElementById("add").length; i++){
+                    let option = document.getElementById("add").options[i];
+					  if (option.selected) {
+                        result_add += option.value + ". ";
+                    }
+                }
+            }	
+			
+			
+
+			let result_conclusion = ""
+			if (document.getElementById("conclusion").length > 0) {
+                for (let i=0; i < document.getElementById("conclusion").length; i++){
+                    let option = document.getElementById("conclusion").options[i];
+					  if (option.selected) {
+                        result_conclusion = option.value + ". ";
+                    }
+                }
+            }	
+			
+			
+			
+			let result_rg = ""
+			if (document.getElementById("rg").length > 0) {
+                for (let i=0; i < document.getElementById("rg").length; i++){
+                    let option = document.getElementById("rg").options[i];
+					  if (option.selected) {
+                        result_rg += option.value + ", ";
+                    }
+                }
+            }	
+
+			
+			
+			
+			<!-- document.getElementById("p5").innerHTML = result; -->
+			<!-- document.getElementById("p_proekcia").innerHTML = result_proekcia; -->
+			<!-- document.getElementById("p_risunok").innerHTML = result_risunok; -->
+			
+				let za = ""
+				if (result_zaschet) {
+					result_risunok = "изменён за счёт "
+				}
+				
+				
+				if (result_rg) {
+					result_conclusion = "рентген-признаки ";
+				}
+			
+			
+			document.getElementById("show").innerText = result_proekcia + " " + "лёгочный рисунок " + result_risunok + result_zaschet.replace(/,(?![^,]*,)/m, '.') + "Корни лёгких " + result_korni.replace(/,(?![^,]*,)/m, '.') + "Лёгочные поля: " + result_polya.replace(/,(?![^,]*,)/m, '.') + "Купол диафрагмы " + result_kupol.replace(/,(?![^,]*,)/m, '.') + "Плевро-диафрагмальные синусы: " + result_sinus.replace(/,(?![^,]*,)/m, '.') + "Границы сердца " + result_cardio + "Аорта " + result_aorta + "Костные структуры: " + result_bones.replace(/,(?![^,]*,)/m, '.') + result_add + "Заключение: " + result_conclusion + result_rg.replace(/,(?![^,]*,)/m, '.');
+			
+			
+        }
+
+			
+
+		
+		
+		
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body id="main_body" >
+	
+	<!-- <img id="top" src="top.png" alt=""> -->
+	
+	<div id="form_container">
+	
+	<div id="form_item_1">
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+		<!-- <h1><a>Грудная клетка</a></h1> -->
+		
+		
+		<form id="form_48871" class="appnitro"  method="post" action="">
+					<div class="form_description">
+			<h2>Грудная клетка</h2>
+			<p><!-- description --></p>
+		</div>		
+
+
+
+
+<div class="my_container">
+
+  <div class="my_card_label">
+    <p>На обзорной.. </p>
+  </div>
+
+<div class="my_card">
+<select class="element select medium" id="proekcia" name="proekcia"> 
+<option value="На обзорной рентгенограмме органов грудной клетки в прямой проекции" selected >РГ в прямой проекции</option>
+<option value="На обзорных рентгенограммах органов грудной клетки в двух проекциях" >РГ в двух проекциях</option>
+<option value="На обзорной флюорограмме органов грудной клетки в прямой проекции" >ФЛГ в прямой проекции</option>
+<option value="На обзорных флюорограммах органов грудной клетки в двух проекциях" >ФЛГ в двух проекциях</option>
+</select>
+</div>
+
+
+  <!-- <div class="my_card"> -->
+<!-- <input id="element_1_1" name="proekcia" class="element radio" type="radio" value="На обзорной рентгенограмме органов грудной клетки в прямой проекции" checked /> -->
+<!-- <label class="choice" for="proekcia">в прямой проекции</label> -->
+<!-- <input id="element_1_2" name="proekcia" class="element radio" type="radio" value="На обзорных рентгенограммах органов грудной клетки в двух проекциях" /> -->
+<!-- <label class="choice" for="proekcia">в двух проекциях</label> -->
+  <!-- <input id="element_1_1" name="proekcia" class="element radio" type="radio" value="На обзорной флюорограмме органов грудной клетки в прямой проекции" checked /> -->
+<!-- <label class="choice" for="proekcia">ФЛГ в прямой проекции</label> -->
+<!-- <input id="element_1_2" name="proekcia" class="element radio" type="radio" value="На обзорных флюорограммах органов грудной клетки в двух проекциях" /> -->
+<!-- <label class="choice" for="proekcia">ФЛГ в двух проекциях</label> -->
+  <!-- </div> -->
+
+  
+</div>
+
+
+
+
+
+
+<div class="my_container">
+
+  <div class="my_card_label">
+    <p>Лёгочный рисунок</p>
+  </div>
+
+<div class="my_card">
+<input id="element_2_1" name="risunok" class="element radio" type="radio" value="не изменён." checked />
+<label class="choice" for="risunok">не изменён</label>
+<input id="element_2_2" name="risunok" class="element radio" type="radio" value="без особенностей." />
+<label class="choice" for="risunok">без особенностей</label>
+
+</div>
+
+
+  <div class="my_card_label">
+    <p align="center">изменен за счёт..</p>
+
+</div>
+
+
+<div class="my_card">
+	  <select id="zaschet" name="zaschet" class="form-control" multiple >
+      <option value="усиления в прикорневых отделах">усиления</option>
+      <option value="умеренного пневмофиброза в базальных отделах">умеренного пневмофиброза</option>
+      <option value="небольшого пневмофиброза в базальных отделах">небольшого пневмофиброза</option>
+      <option value="центрального венозного застоя">центрального застоя</option>
+      <option value="интерстициального компонента">интерстициального</option>
+      <option value="компримирован">компримирован</option>
+    </select>
+
+</div>
+
+
+
+</div>
+
+
+
+<div class="my_container">
+
+  <div class="my_card_label">
+    <p>Корни лёгких</p>
+  </div>
+
+  <div class="my_card">
+        <select id="korni" name="korni" class="form-control" multiple="multiple">
+      <option value="не расширены" selected >не расширены</option>
+      <option value="умеренно расширены">умеренно расширены</option>
+      <option value="расширены">расширены</option>
+	  <option value="структурные" selected >структурные</option>
+	  <option value="структура сохранена">структура сохранена</option>
+      <option value="малоструктурные">малоструктурные</option>
+      <option value="не структурные">не структурные</option>
+      <option value="уплотнены">уплотнены</option>
+      <option value="с нечеткими и неровными контурами">с нечеткими и неровными контурами</option>
+      <option value="с полицикличными контурами">с полицикличными контурами</option>
+    </select>
+
+  </div>
+
+
+</div>
+
+
+
+
+<div class="my_container">
+
+
+  <div class="my_card_label">
+    <p>Лёгочные поля</p>
+  </div>
+
+  <div class="my_card">
+        <select id="polya" name="polya" class="form-control" multiple="multiple">
+      <option value="без видимых очаговых и инфильтративных изменений" selected >без видимых очаговых и инфильтративных изменений</option>
+      <option value="без видимых очаговых изменений">без видимых очаговых изменений</option>
+      <option value="без видимых инфильтративных изменений">без видимых инфильтративных изменений</option>
+      <option value="сгущение в медиобазальном отделе левого легкого">сгущение</option>
+      <option value="неоднородное снижение пневматизации в проекции s6 левого легкого">неоднородное снижение пневматизации</option>
+      <option value="неоднородные уплотнения легочной ткани в проекции s6 правого легкого">неоднородные уплотнения легочной ткани</option>
+      <option value="плотная очаговая тень в среднем отделе правого легкого">плотная очаговая тень</option>
+      <option value="очаговое затенение в проекции s8 левого легкого">очаговое затенение</option>
+    </select>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="my_container">
+
+
+  <div class="my_card_label">
+    <p>Купол диафрагмы</p>
+  </div>
+  
+  <div class="my_card">
+      <select id="kupol" name="kupol" class="form-control" multiple="multiple">
+      <option value="четкий, ровный" selected >четкий, ровный</option>
+      <option value="достаточно четкий, ровный">достаточно четкий, ровный</option>
+      <option value="нечеткий, неровный">нечеткий, неровный</option>
+      <option value="справа нечеткий, неровный">справа нечеткий, неровный</option>
+      <option value="слева нечеткий, неровный">слева нечеткий, неровный</option>
+      <option value="с признаками незначительной релаксации">с признаками незначительной релаксации</option>
+      <option value="с признаками релаксации">с признаками релаксации</option>
+      <option value="с признаками плевро-диафрагмальных спаек">с признаками плевро-диафрагмальных спаек</option>
+    </select>
+  </div>
+  
+  
+  
+ </div>
+
+
+
+
+
+
+<div class="my_container">
+
+
+  <div class="my_card_label">
+    <p>Плевро-<br><br><br><br><br>диафрагмальные<br><br><br><br><br>синусы</p>
+  </div>
+  
+  <div class="my_card">
+      <select id="sinus" name="sinus" class="form-control" multiple="multiple">
+      <option value="свободные в видимых отделах" selected >свободные в видимых отделах</option>
+      <option value="облитерированы">облитерированы</option>
+      <option value="затенены латеральный и задний синусы справа">затенены латеральный и задний справа</option>
+      <option value="затенены латеральный и задний синусы слева">затенены латеральный и задний синусы слева</option>
+      <option value="затенен латеральный синус справа">затенен латеральный справа</option>
+      <option value="затенен латеральный синус слева">затенен латеральный слева</option>
+	  <option value="затенены латеральные синусы с обеих сторон">затенены латеральные с обеих сторон</option>
+      <option value="облитерирован латеральный синус справа">облитерирован латеральный справа</option>
+      <option value="облитерирован латеральный синус слева">облитерирован латеральный слева</option>
+	  <option value="облитерированы латеральные синусы с обеих сторон">облитерированы латеральные с обеих сторон</option>
+    </select>
+  </div>
+  
+  </div>
+		
+		
+
+		
+<div class="my_container">
+
+
+  <div class="my_card_label">
+    <p>Границы сердца</p>
+  </div>
+  
+    <div class="my_card">
+	
+			<select class="element select medium" id="cardio" name="cardio"> 
+			<option value="не расширены" selected >не расширены</option>
+<option value="умеренно расширены в поперечнике" >умеренно расширены в поперечнике</option>
+<option value="выражено расширены в поперечнике" >выражено расширены в поперечнике</option>
+<option value="резко расширены в поперечнике" >резко расширены в поперечнике</option>
+<option value="умеренно расширены влево" >умеренно расширены влево</option>
+<option value="минимально расширены влево" >минимально расширены влево</option>
+<option value="выражено расширены влево" >выражено расширены влево</option>
+<option value="резко расширены влево" >резко расширены влево</option>
+		</select>
+	
+	
+  </div>
+  </div>
+		
+		
+		
+		
+	<div class="my_container">
+
+  <div class="my_card_label">
+    <p>Аорта</p>
+  </div>
+  
+    <div class="my_card">	
+		<select class="element select medium" id="aorta" name="aorta"> 
+			<option value="не изменена" selected >не изменена</option>
+<option value="соответствует возрасту" >соответствует возрасту</option>
+<option value="удлинена" >удлинена</option>
+<option value="фрагментарно кальцинирована" >фрагментарно кальцинирована</option>
+<option value="удлинена, фрагментарно кальцинирована" >удлинена, фрагментарно кальцинирована</option>
+<option value="удлинена, кальцинирована" >удлинена, кальцинирована</option>
+		</select>
+
+</div>
+
+
+</div>
+		
+		
+		
+			<div class="my_container">
+
+  <div class="my_card_label">
+    <p>Костные структуры</p>
+  </div>
+  
+    <div class="my_card">	
+	<select id="bones" name="bones" class="form-control" multiple="multiple">
+      <option value="без особенностей" selected >без особенностей</option>
+      <option value="дегенеративно-дистрофические изменения грудного отдела позвоночника">дегенеративные изменения</option>
+      <option value="грудной отдел позвоночника легко сколиотически деформирован">легкий сколиоз грудного</option>
+      <option value="грудной отдел позвоночника сколиотически деформирован">сколиоз грудного</option>
+      <option value="грудопоясничный  отдел позвоночника сколиотически деформирован">сколиоз грудопоясничного</option>
+      <option value="консолидированные переломы VI, VII, VIII ребер справа, VI, VII, VIII ребер слева">консолидированные переломы</option>
+      <option value="консолидированный перелом VI ребра справа">консолидированный перелом</option>
+    </select>
+	</div>
+
+</div>	
+		
+
+<div class="my_container">
+
+  <div class="my_card_label">
+    <p>Дополнения</p>
+  </div>
+  
+    <div class="my_card">
+	<select id="add" name="add" class="form-control" multiple="multiple">
+      <option value="С обеих сторон уплотнена апикальная плевра">С обеих сторон уплотнена апикальная плевра</option>
+      <option value="С обеих сторон неравномерно уплотнена апикальная плевра">С обеих сторон неравномерно уплотнена апикальная плевра</option>
+      <option value="С обеих сторон затенена апикальная плевра">С обеих сторон затенена апикальная плевра</option>
+      <option value="Обызвествеление реберных хрящей">Обызвествеление реберных хрящей</option>
+      <option value="Состояние после оперативного вмешательства">Состояние после оперативного вмешательства</option>
+    </select>
+	</div>
+	
+	</div>	
+		
+
+
+<div class="my_container">
+
+  <div class="my_card_label">
+    <p>Заключение<p/>
+  </div>
+  
+      <div class="my_card">	
+		<select class="element select medium" id="conclusion" name="conclusion"> 
+<option value="органы грудной полости без видимой патологии" selected >органы грудной полости без видимой патологии</option>
+<option value="рентген-данных за патологические изменения в легких не получено" >рентген-данных за патологические изменения в легких не получено</option>
+<option value="рентген-данных за свежие патологические изменения в легких не получено" >рентген-данных за "свежие" патологические изменения в легких не получено</option>
+<option value="органы грудной полости в пределах возрастной нормы" >органы грудной полости в пределах возрастной нормы</option>
+<option value="рентген-признаки возрастных изменений органов грудной полости" >рентген-признаки возрастных изменений органов грудной полости</option>
+<option value="рентген-данных за инфильтративные изменения в легких не получено" >рентген-данных за инфильтративные изменения в легких не получено</option>
+
+<option value="по сравнению с рентген-картиной от 24.10.23 положительная динамика за счет" >по сравнению с рентген-картиной от 24.10.23 положительная динамика за счет</option>
+
+<option value="по сравнению с рентген-картиной от 24.10.23 отрицательная динамика за счет" >по сравнению с рентген-картиной от 24.10.23 отрицательная динамика за счет</option>
+
+<option value="по сравнению с рентген-картиной от 24.10.23 без существенной динамики" >по сравнению с рентген-картиной от 24.10.23 без существенной динамики</option>
+		</select>
+
+</div>
+
+</div>
+	
+
+
+<div class="my_container">
+
+
+	<div class="my_card_label">
+    <p>Рентген-признаки</p>
+	</div>
+	
+	<div class="my_card">
+	  <select id="rg" name="rg" class="form-control" multiple="multiple">
+      <option value="умеренной кардиомегалии">умеренной кардиомегалии</option>
+      <option value="кардиомегалии">кардиомегалии</option>
+      <option value="центрального вензного застоя">центрального вензного застоя</option>
+      <option value="расширения корня правого легкого">расширения корня правого легкого</option>
+      <option value="расширения и малоструктурности корня правого легкого">расширения и малоструктурности корня правого легкого</option>
+      <option value="возрастных изменений органов грудной полости">возрастных изменений органов грудной полости</option>
+      <option value="поствоспалительных изменений органов грудной полости">поствоспалительных изменений органов грудной полости</option>
+      <option value="поствоспалительных и возрастных изменений органов грудной полости">поствоспалительных и возрастных изменений органов грудной полости</option>
+    </select>
+	</div>
+		
+
+
+  <div class="my_card_label">
+    <p align="center">Рекомендовано<p/>
+  </div>	
+		
+	<div>
+	  <select id="recom" name="recom" class="form-control" multiple="multiple">
+      <option value="рентген-снимок в фазу вдоха">рентген-снимок в фазу вдоха</option>
+      <option value="рентген-снимок в правой боковой проекции">рентген-снимок в правой боковой проекции</option>
+      <option value="рентген-снимок в левой боковой проекции">рентген-снимок в левой боковой проекции</option>
+      <option value="соотнести с клинико-лабораторными данными">соотнести с клинико-лабораторными данными</option>
+      <option value="МСКТ органов грудной полости в плановом порядке">МСКТ органов грудной полости в плановом порядке</option>
+      <option value="МСКТ органов грудной полости">МСКТ органов грудной полости</option>
+    </select>
+	</div>	
+		
+	
+  </div>
+  
+ 
+  </form>	
+
+		
+		
+	</div>
+		
+
+	</div>
+	
+
+	
+	
+	
+	<div id="form_item_2">
+	
+	
+
+	<!-- <div> -->
+	<!-- <ul id="my_navi_ul"> -->
+  <!-- <li><a id="my_navi_li_a" href="#home">Главная</a></li> -->
+  <!-- <li><a id="my_navi_li_a" href="#news">Новости</a></li> -->
+  <!-- <li><a id="my_navi_li_a" href="#contact">Контакты</a></li> -->
+  <!-- <li><a id="my_navi_li_a" href="#about">О нас</a></li> -->
+	<!-- </ul> -->
+	
+	<!-- </div> -->
+	
+
+	
+	
+	
+<div class="page">
+  <nav class="page__menu menu">
+    <ul class="menu__list r-list">
+      <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Option #1</a></li>
+      <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Option #2</a></li>
+      <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Option #3</a></li>
+	  <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Option #4</a></li>
+	  <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Option #5</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+
+	<li class="buttons">
+	<input type="hidden" name="form_id" value="48871" />
+	<input id="saveForm" class="button_text" type="submit" name="submit" value="Вывод" onclick="testVariable()" />
+	</li>
+	
+	
+<!-- 		<p id="p_proekcia"></p>
+        <p id="p_risunok"></p>
+        <p id="p2"></p>
+		<p id="p4"></p>
+		<p id="p5"></p> -->
+		
+		<textarea variable="yname" id="show" class="mytextarea" rows="20" cols="70"></textarea>
+
+
+
+
+	
+	
+
+	</div>
+	
+
+	
+	
+	</div>
+	
+
+	
+	<!-- <img id="bottom" src="bottom.png" alt=""> -->
+	</body>
+</html>

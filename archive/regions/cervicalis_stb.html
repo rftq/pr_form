@@ -1,0 +1,507 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Шейный отдел позвоночника</title>
+  <link rel="stylesheet" type="text/css" href="view.css" media="all">
+  <script type="text/javascript" src="view.js"></script>
+  <link rel="stylesheet" type="text/css" href="msfmultiselect.css" />
+  <script src="msfmultiselect.js"></script>
+  <!-- <script type="text/javascript" src="autorep.js"></script> -->
+  <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+
+  <script>
+    function testVariable() {
+      debugger
+
+      // let result_list = [];
+      // if (document.getElementById("list").length > 0) {
+      //   for (let i = 0; i < document.getElementById("list").length; i++) {
+      //     let option = document.getElementById("list").options[i];
+      //     if (option.selected) {
+      //       result_list = option.value;
+      //     }
+      //   }
+      // }
+
+      let proekcia = "На рентгенограммах шейного отдела позвоночника в двух проекциях";
+      let os = "ось ";
+      let osPathology = "не отклонена"
+      let osSide = "вправо";
+
+      let lord = "Физиологический шейный лордоз ";
+      let lordPathology = "сохранён";
+      let min = "Минеральная плотность позвонков ";
+      let minPathology = "сохранена";
+
+      let vysota = "Высота тел позвонков ";
+
+      let rg = 'рентген-признаки'; // используется только в условиях
+      let dg = 'дегенеративно-дистрофических изменений шейного отдела позвоночника' // используется только в условиях
+      let dgNachalnye = 'начальных дегенеративно-дистрофических изменений шейного отдела позвоночника' // используется только в условиях
+      let zamykat = 'замыкательные пластинки тел позвонков';
+      let disc = "Высота межпозвонковых дисков ";
+      let discPathology = "не снижена";
+
+      let scler = ""; //субхондральный склероз 
+      let kraevye = ""; //спондилофиты не визуализируются
+      let ost = "";
+      let dug = "Дугоотростчатые суставы без особенностей";
+      let pol = "Полулунные отростки без особенностей";
+
+      let additional = "";
+
+      let conclusion = "Заключение: ";
+      let conclusionSkol = "";
+      let conclusionPathology = "";
+      let conclusionLord = "";
+      let conclusionVysota = "";
+
+      let space = " ";
+      let dot = ". ";
+      let comma = ", ";
+      let skobka = "";
+      let skobkaEnd = "";
+
+      let osteohFlag = "";
+      let nachFlag = "";
+      let osteoh = "";
+      let spondilez = "";
+      let spondiloartroz = "";
+
+      let abz = String.fromCharCode(13, 10);
+      let abzForAdditional = String.fromCharCode(13, 10);
+
+
+
+
+
+
+      // ДОПОЛНЕНИЯ
+      if (pole.value.includes('шум')) {
+        additional += "Повышенный шум на изображениях. ";
+      }
+      if (pole.value.includes('дин')) {
+        additional += "Динамические артефакты. ";
+      }
+      if (pole.value.includes('мет')) {
+        additional += "Артефакт металлической плотности. ";
+      }
+      if (pole.value.includes('плот')) {
+        additional += "Плотная тень размерами 11х15мм в проекции ... - артефакт? ";
+      }
+      if (pole.value.includes('арт')) {
+        additional += "Артефакты от одежды. ";
+      }
+
+      // УБИРАЕТ АБЗАЦ ЕСЛИ НЕТ ДОПОЛНЕНИЙ
+      if (additional == "") {
+        abzForAdditional = "";
+      }
+
+
+      
+
+
+
+      // ОТКЛОНЕНИЕ ОСИ СКОЛИЗ
+      if (pole.value.includes('лев')) {
+        osSide = "влево";
+      }
+
+      if (pole.value.includes('отк')) {
+        osPathology = `умеренно отклонена ${osSide}`
+      } else if (pole.value.includes('скол')) {
+        osPathology = `шейно-грудного отдела позвоночника С-образно сколиотически искривлена ${osSide} без ротации тел позвонков. Угол вершиной на уровне Th1 5,5гр. На высоте искривления определяется минимальное снижение высоты противоположных отделов межпозвонковых дисков`
+        conclusionSkol = space + "С-образной сколиотической деформации шейно-грудного отдела позвоночника I степени (по В.Д. Чаклину)"
+        conclusionPathology = rg;
+      } else {
+        osPathology = "не отклонена"
+      }
+
+
+
+
+
+      // ЛОРДОЗ КИФОЗ
+      if (pole.value.includes('вып')) {
+        lordPathology = "выпрямлен";
+        conclusionLord = true;
+        conclusionPathology = rg;
+      } else if (pole.value.includes('киф')) {
+        lordPathology = "выпрямлен с кифотической установкой";
+        conclusionLord = true;
+        conclusionPathology = rg;
+      } else if (pole.value.includes('сгл')) {
+        lordPathology = "сглажен";
+        conclusionLord = true;
+        conclusionPathology = rg;
+      }
+
+
+
+
+
+
+      // МИНЕРАЛЬНАЯ ПЛОТНОСТЬ
+      if (pole.value.includes('мин')) {
+        minPathology = "снижена";
+      }
+
+
+
+
+
+
+      // ВЫСОТА ТЕЛ ПОЗВОНКОВ
+      if (pole.value.includes('сниж')) {
+        vysota += "С3, С4, С5, С6, С7 снижена по передней поверхности до 1/4";
+        conclusionVysota = space + "мягкой клиновидной деформации тел позвонков С3, С4, С5, С6, С7";
+        conclusionPathology = rg;
+      }
+
+
+
+
+
+
+
+      // ВЫСОТА МЕЖПОЗВОНКОВЫХ ДИСКОВ
+      if (pole.value.includes('3-5')) {
+        discPathology = "снижена в сегменте(-ах): С3-С4, С4-С5";
+      } else if (pole.value.includes('2-5')) {
+        discPathology = "снижена в сегменте(-ах): С2-С3, С3-С4, С4-С5";
+      } else if (pole.value.includes('2-7')) {
+        discPathology = "снижена в сегменте(-ах): С2-С3, С3-С4, С4-С5, С5-С6, С6-С7";
+      }
+
+
+
+
+
+
+      // СУБХОНДРАЛЬНЫЙ СКЛЕРОЗ
+      if (pole.value.includes('суб')) {
+        scler = comma + "субхондральный склероз тел позвонков";
+        osteohFlag = true;
+        osteoh = "остеохондроз, ";
+      } else if (pole.value.includes('упл')) {
+        scler = comma + "уплотнены " + zamykat;
+        osteohFlag = true;
+        osteoh = "остеохондроз, ";
+      } else if (pole.value.includes('подч')) {
+        scler = comma + "подчёркнуты " + zamykat;
+        conclusionPathology = rg + space + dgNachalnye;
+      }
+
+
+
+
+
+
+      // СПОНДИЛОФИТЫ
+      if (pole.value.includes('спонд')) {
+        kraevye = comma + "спондилофиты по задним и по передним поверхностям тел позвонков";
+      } else if (pole.value.includes('скоб')) {
+        kraevye = comma + "спондилофиты по задним и скобкообразного характера по переднебоковым поверхностям тел позвонков";
+        spondilez = "спондилёз, ";
+        osteohFlag = true;
+      }
+
+
+
+
+
+      // ИЗМЕНЕНИЯ В ОСТАЛЬНЫХ ОТДЕЛАХ
+      if (pole.value.includes('ост')) {
+        ost = "Изменения в остальных отделах менее выражены" + dot;
+      }
+
+
+
+
+
+      // ДУГООТРОСТЧАТЫЕ СУСТАВЫ
+      if (pole.value.includes('дугуп')) {
+        dug = "Уплотнены суставные поверхности дугоотростчатых суставов";
+        osteohFlag = true;
+      } else if (pole.value.includes('дугпо')) {
+        dug = "Подчёркнуты суставные поверхности дугоотростчатых суставов";
+        nachFlag = true;
+      } else if (pole.value.includes('дуг')) {
+        dug = "Уплотнены суставные поверхности и неравномерно снижена высота рентгеновской суставной щели дугоотростчатых суставов";
+        osteohFlag = true;
+      }
+
+
+
+
+
+
+      // ПОЛУЛУННЫЕ ОТРОСТКИ
+      if (pole.value.includes('пол')) {
+        pol = "Полулунные отростки заострены, удлинены, некоторые латерально отклонены";
+      }
+
+
+
+
+
+
+
+      // ЗАКЛЮЧЕНИЕ
+      if (conclusionLord) {
+        conclusionLord = space + "с нарушением статики";
+      }
+
+      if (dug != "Дугоотростчатые суставы без особенностей") {
+        spondiloartroz = "спондилоартроз, ";
+      }
+
+      if (conclusionPathology == "") {
+        conclusionPathology = "рентген-признаков патологических изменений не выявлено";
+      }
+
+
+      if (nachFlag) {
+        skobka = space + "(";
+        conclusionPathology = rg + space + dgNachalnye;
+      }
+
+
+      if (osteohFlag) {
+        skobka = space + "(";
+        conclusionPathology = rg + space + dg;
+        // skobkaEnd = ")";
+      }
+
+
+      conclusionOsteoh = skobka + (osteoh + spondilez + spondiloartroz).replace(/,(?![^,]*,)/m, ')').trim();
+
+      if ((conclusionOsteoh != "" || conclusionPathology != "рентген-признаки" || conclusionLord != "") && conclusionSkol != "") {
+        conclusionSkol = "," + conclusionSkol;
+      }
+
+
+      // if (condition) {
+
+      // }
+      // conclusionVysota = "," + conclusionVysota;
+
+
+
+      document.getElementById("show").value = additional + abzForAdditional + proekcia + space + os + osPathology + dot + abz + lord + lordPathology + dot + abz + vysota + dot + abz + min + minPathology + dot + abz + disc + discPathology + scler + kraevye + dot + ost + abz + dug + dot + abz + pol + dot + abz + conclusion + conclusionPathology + conclusionOsteoh + conclusionLord + conclusionSkol + conclusionVysota + dot;
+
+
+
+
+
+
+      // НЕНУЖНОЕ
+      // if (result_list.includes("os_um_otklonena")) {
+      //   os = "ось умеренно отклонена вправо";
+      // } else if (result_list.includes("os_otklonena")) {
+      //   os = "ось отклонена вправо";
+      // } else if (result_list.includes("os_skol")) {
+      //   os = "ось шейно-грудного отдела позвоночника С-образно сколиотически искривлена вправо без ротации тел позвонков. Угол вершиной на уровне Th1 5,5гр. На высоте искривления определяется минимальное снижение высоты противоположных отделов межпозвонковых дисков."
+      //   skol = "С-образной сколиотической деформации шейно-грудного отдела позвоночника I степени (по Дж. Коббу)"
+      //   conclusion = "Заключение: рентген-признаки" + space;
+      // }
+
+
+      // if (pole.value.includes('нач')) {
+      //   conclusion = "Заключение: рентген-признаки начальных дегенеративно-дистрофических изменений шейного отдела позвоночника";
+      // } else if (pole.value.includes('умдег')) {
+      //   conclusion = "Заключение: рентген-признаки умеренных дегенеративно-дистрофических изменений шейного отдела позвоночника";
+      // } else if (pole.value.includes('дег')) {
+      //   conclusion = "Заключение: рентген-признаки дегенеративно-дистрофических изменений шейного отдела позвоночника";
+      // } else if (pole.value.includes('выр')) {
+      //   conclusion = "Заключение: рентген-признаки выраженных дегенеративно-дистрофических изменений шейного отдела позвоночника";
+      // }
+
+
+      // if (pole.value.includes('нар')) {
+      //   nar = " с нарушением статики";
+      // }
+
+
+      // if (lord != "Физиологический шейный лордоз сохранён" && conclusion == "Заключение: рентген-признаков патологических изменений не выявлено") {
+      //   conclusion = "Заключение: рентген-признаки нарушения статики шейного отдела позвоночника";
+      //   conclusionNar = "";
+      // }
+
+      // if (lord != "Физиологический шейный лордоз сохранён" && conclusionSkol != "" && conclusion == "Заключение: рентген-признаки" + space) {
+      //   conclusion = "Заключение: рентген-признаки нарушения статики шейного отдела позвоночника";
+      //   skol = comma + conclusionSkol;
+      //   conclusionNar = "";
+      // }
+
+
+      // document.getElementById("show").innerText = result_list;      
+      // pro_okno = document.getElementById("pro").innerHTML;
+
+
+
+
+
+
+
+      let input = document.getElementById("pole");
+      input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("saveForm").click();
+        }
+      });
+    }
+
+    function copy_to_clipboard(show) {
+      document.getElementById(show).select();
+      document.execCommand('copy');
+    }
+
+  </script>
+
+
+
+
+
+</head>
+
+<body id="main_body">
+
+  <div id="form_container">
+
+
+    <!-- 
+     <div id="form_item_1">
+
+      <form id="form_48871" class="appnitro" method="post" action="">
+        <div class="form_description">
+          <h2>Шейный отдел позвоночника</h2>
+          <p>
+            description
+          </p>
+        </div>
+
+        <div class="my_container">
+          
+          <div class="my_card">
+            <select class="form-control" id="list" name="list" multiple>
+               <option disabled>------------------ОСЬ</option>
+              <option value="os_um_otklonena">умеренно отклонена</option>
+            </select>
+          </div>
+        </div>
+
+
+      </form>
+
+
+    </div> 
+  -->
+
+    <div class="mydivh1">
+      <ul class="my_ul">
+        <li>отк</li>
+        <li>скол</li>
+        <li>лев</li>
+        <li>вып</li>
+        <li>киф</li>
+        <li>сгл</li>
+        <li>мин</li>
+        <li>3-5</li>
+        <li>2-5</li>
+        <li>2-7</li>
+        <li>суб</li>
+        <li>упл</li>
+        <li>подч</li>
+        <li>спонд</li>
+        <li>скоб</li>
+        <li>ост</li>
+        <li>дугуп</li>
+        <li>дугпо</li>
+        <li>дуг</li>
+        <li>шум</li>
+        <li>дин</li>
+        <li>мет</li>
+        <li>плот</li>
+        <li>арт</li>
+      </ul>
+    </div>
+
+    <div id="form_item_2">
+
+
+      <div class="page">
+        <nav class="page__menu menu">
+          <ul class="menu__list r-list">
+            <li class="menu__group"><a href="thorax.html" class="menu__link r-link text-underlined">ОГК</a></li>
+            <li class="menu__group"><a href="knee.html" class="menu__link r-link text-underlined">КОЛ</a></li>
+            <li class="menu__group"><a href="ankle.html" class="menu__link r-link text-underlined">ГОЛ</a></li>
+            <li class="menu__group"><a href="hip.html" class="menu__link r-link text-underlined">ТБС</a></li>
+            <li class="menu__group"><a href="wrist.html" class="menu__link r-link text-underlined">ЛУЧ</a></li>
+            <li class="menu__group"><a href="shoulder.html" class="menu__link r-link text-underlined">ПЛЕЧ</a></li>
+          </ul>
+
+          <ul class="menu__list r-list">
+
+            <li class="menu__group"><a href="cervicalis.html" class="menu__link">ШОП</a></li>
+            <li class="menu__group"><a href="thoracicus.html" class="menu__link r-link text-underlined">ГОП</a></li>
+            <li class="menu__group"><a href="lumbalis.html" class="menu__link r-link text-underlined">ПОП</a></li>
+          </ul>
+        </nav>
+      </div>
+      <br>
+
+
+
+      <textarea variable="yname" id="show" class="mytextarea" rows="18" cols="90"></textarea><br>
+
+
+
+      <input class="pole" id="pole" />
+
+      <li class="buttons">
+        <input id="saveForm" class="my_btn-new" type="submit" name="submit" value="Вывод" onclick="testVariable()" />
+        <input type="button" class="my_btn-new" value="Скопировать" onclick="copy_to_clipboard('show');">
+      </li>
+
+    </div>
+
+
+
+  </div>
+
+
+
+</body>
+
+<script>
+
+  var list = new MSFmultiSelect(
+    document.querySelector('#list'),
+    {
+      theme: 'theme2',
+      selectAll: true,
+      searchBox: true,
+      width: '500px',
+      height: '80px',
+      // readOnly: true,
+      onChange: function (checked, value, instance) {
+        console.log(checked, value, instance);
+      },
+      // appendTo: '#myselect',
+      autoHide: true
+    }
+  )
+
+
+
+</script>
+
+
+
+</html>

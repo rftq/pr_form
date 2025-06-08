@@ -1,0 +1,347 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Кисть</title>
+  <link rel="stylesheet" type="text/css" href="view.css" media="all">
+  <script type="text/javascript" src="view.js"></script>
+  <link rel="stylesheet" type="text/css" href="msfmultiselect.css" />
+  <script src="msfmultiselect.js"></script>
+  <!-- <script type="text/javascript" src="autorep.js"></script> -->
+  <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+
+  <script>
+    function testVariable() {
+      debugger
+
+      let result_list = [];
+      if (document.getElementById("list").length > 0) {
+        for (let i = 0; i < document.getElementById("list").length; i++) {
+          let option = document.getElementById("list").options[i];
+          if (option.selected) {
+            result_list += option.value;
+          }
+        }
+      }
+
+      let proekcia = "На обзорных рентгенограммах правой и левой кистей в двух проекциях";
+      let travm = "рентген-признаков костных травматических и деструктивных изменений не выявлено";
+      let min = "Минеральная плотность костей сохранена";
+      let kong = "Суставные поверхности конгруэнтные";
+      let vys = "Высота рентгеновской суставной щели";
+      let sub = "";
+      let kraevye = "Краевые костные разрастания";
+      let conclusion = "Заключение: рентген-признаков патологических изменений не выявлено";
+
+      let space = " ";
+      let dot = ". ";
+      let comma = ", ";
+
+      const autoreplace = {
+        проминсниж: "минимально снижена",
+        проумсниж: "умеренно снижена",
+        проснижена: "снижена",
+        провырсниж: "выражено снижена",
+        прокс: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        дисминсниж: "минимально снижена",
+        дисумсниж: "умеренно снижена",
+        дисснижена: "снижена",
+        дисвырсниж: "выражено снижена",
+        дист: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        пид: "в проксимальных и дистальных межфаланговых суставах правой и левой кистей,",
+        пф: "в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) правой кисти, в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) левой кисти,",
+        пиф: "в пястно-фаланговых суставах правой и левой кистей,",
+        зп: "в 1-м запястно-пястном суставе правой кисти, в 1-м запястно-пястном суставе левой кисти,",
+      };
+
+      const autoreplaceSub = {
+        субх: "Субхондральный склероз суставной поверхности",
+        субп1: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        субд1: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        упл: "уплотнение суставной поверхности",
+        субп2: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        субд2: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        подч: "подчеркнута суставная поверхность",
+        субп3: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        субд3: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        пяст: "1-й, 2-й, 3-й, 4-й, 5-й пястной кости(-ей) правой кисти, 1-й, 2-й, 3-й, 4-й, 5-й пястной кости(-ей)  левой кисти,",
+        деф: "деформация суставной поверхности",
+        деп: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        дед: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        дея: "1-й, 2-й, 3-й, 4-й, 5-й пястной кости(-ей) правой кисти, 1-й, 2-й, 3-й, 4-й, 5-й пястной кости(-ей)  левой кисти,",
+      }
+
+      const autoreplaceKraevye = {
+        крмин: "минимальные",
+        крмпро: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        крмдис: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        крмпясфал: "в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) правой кисти, в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) левой кисти,",
+        крмпф: "в пястно-фаланговых суставах правой и левой кистей,",
+        крмприд: "в проксимальных и дистальных межфаланговых суставах правой и левой кистей",
+        крум: "умеренные",
+        крупро: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        крудис: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        крупясфал: "в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) правой кисти, в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) левой кисти,",
+        крупф: "в пястно-фаланговых суставах правой и левой кистей,",
+        круприд: "в проксимальных и дистальных межфаланговых суставах правой и левой кистей",
+        крвыр: "выраженные",
+        крвпро: "в проксимальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        крвдис: "в дистальном межфаланговом суставе 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) правой кисти, 1-го, 2-го, 3-го, 4-го, 5-го пальца(-ев) левой кисти,",
+        крвпясфал: "в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) правой кисти, в 1-м, 2-м, 3-м, 4-м, 5-м пястно-фаланговом суставе(-ах) левой кисти,",
+        крвпф: "в пястно-фаланговых суставах правой и левой кистей,",
+        крвприд: "в проксимальных и дистальных межфаланговых суставах правой и левой кистей",
+      }
+
+
+      let keysAutoreplace = Object.keys(autoreplace);
+      let keysAutoreplaceSub = Object.keys(autoreplaceSub);
+      let keysAutoreplaceKraevye = Object.keys(autoreplaceKraevye);
+
+      // select высота
+      for (i = 0; i < keysAutoreplace.length; i++) {
+        if (result_list.includes(keysAutoreplace[i])) {
+          vys += " " + autoreplace[keysAutoreplace[i]];
+        }
+      }
+
+      if (vys == "Высота рентгеновской суставной щели") {
+        vys += " " + "не снижена.";
+      }
+      vys = vys.replace(/,(?![^,]*,)/m, '.');
+
+
+// select субхондральный склероз, деформация
+      for (i = 0; i < keysAutoreplaceSub.length; i++) {
+        if (result_list.includes(keysAutoreplaceSub[i])) {
+          sub += " " + autoreplaceSub[keysAutoreplaceSub[i]];
+        }
+      }
+      sub = sub.replace(/,(?![^,]*,)/m, '.');
+      sub = sub.trim();
+      sub = sub.charAt(0).toUpperCase() + sub.slice(1);
+      sub = " " + sub;
+
+
+
+// select краевые костные разрастания
+for (i = 0; i < keysAutoreplaceKraevye.length; i++) {
+        if (result_list.includes(keysAutoreplaceKraevye[i])) {
+          kraevye += " " + autoreplaceKraevye[keysAutoreplaceKraevye[i]];
+        }
+      }
+      kraevye = kraevye.replace(/,(?![^,]*,)/m, '.');
+
+// добавить или
+      // "Краевые костные разрастания не визуализируются"
+
+
+
+
+
+      // input pole
+      // let count = 0;
+      // for (i = 0; i < keysAutoreplace.length; i++) {
+      //   if (pole.value.includes(keysAutoreplace[i])) {
+      //     vys += autoreplace[keysAutoreplace[i]] + " ";
+      //   }
+      // }
+
+      // input короткая версия
+      for (let key in autoreplace) {
+        if (pole.value.includes(key)) {
+          vys += autoreplace[key];
+        }
+      }
+  
+
+      // input pole
+      // let count = 0;
+      // for (i = 0; i < keysAutoreplace.length; i++) {
+      //   if (pole.value.includes(keysAutoreplace[i])) {
+      //     vys += autoreplace[keysAutoreplace[i]] + " ";
+      //   }
+      // }
+  
+      // добавление в массив отрывки
+      // poleArray.push(pole.value.split(' '));
+      // poleArray.join(' ').split(' ');
+      // vysArray.push(autoreplace[key]);
+      // vys += vysArray.join(" ");
+      
+
+      // pole.value = pole.value.replace(keysAutoreplace[i], ""); //удалить строку в поле
+      // count = pole.value.split(keysAutoreplace[i]).length - 1; //посчитать сколько повторяющихся слов в input
+
+
+
+
+      document.getElementById("show").innerText = proekcia + space + travm + dot + kong + dot + min + dot + vys + sub + kraevye;
+
+
+
+
+      let input = document.getElementById("pole");
+      input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("saveForm").click();         
+        }
+      });
+
+    }
+
+    function copy_to_clipboard(show) {
+      document.getElementById(show).select();
+      document.execCommand('copy');
+    }
+
+  </script>
+
+
+
+
+
+</head>
+
+<body id="main_body">
+
+  <div id="form_container">
+
+    <div id="form_item_1">
+
+
+      <form id="form_48871" class="appnitro" method="post" action="">
+        <div class="form_description">
+          <h2>Кисть</h2>
+          <p><!-- description --></p>
+        </div>
+
+        <div class="my_container">
+
+
+          <div class="my_card">
+            <select class="form-control" id="list" name="list" multiple>
+              <option disabled>====ВЫСОТА====</option>
+              <option value="проминсниж">минимально снижена</option>
+              <option value="проумсниж">умеренно снижена</option>
+              <option value="проснижена">снижена</option>
+              <option value="провырсниж">выражено снижена</option>
+              <option value="прокс">В ПРОКСИМАЛЬНОМ</option>
+              <option value="дисминсниж">минимально снижена</option>
+              <option value="дисумсниж">умеренно снижена</option>
+              <option value="дисснижена">снижена</option>
+              <option value="дисвырсниж">выражено снижена</option>
+              <option value="дист">В ДИСТАЛЬНОМ</option>
+              <option value="пид">В ПРОКСИМАЛЬНЫХ И ДИСТАЛЬНЫХ</option>
+              <option value="пф">В ПЯСТНО-ФАЛАНГОВОМ</option>
+              <option value="пиф">В ПЯСТНО-ФАЛАНГОВЫХ</option>
+              <option value="зп">1-М ЗАПЯСТНО-ПЯСТНОМ</option>
+              <option value="субх">====СУБХ СКЛЕРОЗ====</option>
+              <option value="субп1">проксимальном</option>
+              <option value="субд1">дистальном</option>
+              <option value="упл">УПЛОТНЕНЫ</option>
+              <option value="субп2">проксимальном</option>
+              <option value="субд2">дистальном</option>
+              <option value="подч">ПОДЧЁРКНУТЫ</option>
+              <option value="субп3">проксимальном</option>
+              <option value="субд3">дистальном</option>
+              <option value="пяст">ПЯСТНЫХ КОСТЕЙ</option>
+              <option value="деф">====ДЕФОРМАЦИЯ====</option>
+              <option value="деп">проксимальном</option>
+              <option value="дед">дистальном</option>
+              <option value="дея">ПЯСТНЫХ КОСТЕЙ</option>
+              <option value="деф">====КРАЕВЫЕ====</option>
+              <option value="крмин">минимальные</option>
+              <option value="крмпро">проксимальном</option>
+              <option value="крмдис">дистальном</option>
+              <option value="крмпясфал">пястно-фаланговом</option>
+              <option value="крмпф">в пястно-фаланговых</option>
+              <option value="крмприд">в проксимальных и дистальных</option>
+            </select>
+          </div>
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+
+
+
+
+    <div id="form_item_2">
+
+
+      <div class="page">
+        <nav class="page__menu menu">
+          <ul class="menu__list r-list">
+            <li class="menu__group"><a href="thorax.html" class="menu__link r-link text-underlined">ОГК</a></li>
+            <li class="menu__group"><a href="knee.html" class="menu__link r-link text-underlined">КОЛ</a></li>
+            <li class="menu__group"><a href="ankle.html" class="menu__link r-link text-underlined">ГОЛ</a></li>
+            <li class="menu__group"><a href="hip.html" class="menu__link r-link text-underlined">ТБС</a></li>
+            <li class="menu__group"><a href="wrist.html" class="menu__link r-link text-underlined">ЛУЧ</a></li>
+          </ul>
+          <ul class="menu__list r-list">
+            <li class="menu__group"><a href="shoulder.html" class="menu__link r-link text-underlined">ПЛЕЧ</a></li>
+            <li class="menu__group"><a href="cervicalis.html" class="menu__link r-link text-underlined">ШОП</a></li>
+            <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">ГОП</a></li>
+            <li class="menu__group"><a href="lumbalis.html" class="menu__link r-link text-underlined">ПОП</a></li>
+          </ul>
+        </nav>
+      </div>
+      <br>
+
+
+
+      <textarea variable="yname" id="show" class="mytextarea" rows="15" cols="60"></textarea><br>
+
+
+
+
+      <input class="pole" id="pole" />
+
+      <li class="buttons">
+        <input id="saveForm" class="my_btn-new" type="submit" name="submit" value="Вывод" onclick="testVariable()" />
+        <input type="button" class="my_btn-new" value="Скопировать" onclick="copy_to_clipboard('show');">
+      </li>
+
+    </div>
+
+
+
+  </div>
+
+
+
+</body>
+
+<script>
+
+  var list = new MSFmultiSelect(
+    document.querySelector('#list'),
+    {
+      theme: 'theme2',
+      selectAll: true,
+      searchBox: true,
+      width: '500px',
+      height: '80px',
+      // readOnly: true,
+      onChange: function (checked, value, instance) {
+        console.log(checked, value, instance);
+      },
+      // appendTo: '#myselect',
+      autoHide: false
+    }
+  )
+
+
+
+</script>
+
+
+
+</html>

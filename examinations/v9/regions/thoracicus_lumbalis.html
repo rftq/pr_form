@@ -1,0 +1,620 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Грудной отдел позвоночника</title>
+    <link rel="stylesheet" type="text/css" href="../view.css" media="all">
+    <script type="text/javascript" src="../view.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="msfmultiselect.css" /> -->
+    <!-- <script src="msfmultiselect.js"></script> -->
+    <!-- <script type="text/javascript" src="autorep.js"></script> -->
+    <!-- <script type="text/javascript" src="jquery-2.1.3.min.js"></script> -->
+
+    <script>
+        // let parts = {
+        //     partThoracicus: 
+        //         {
+        //             conditionalsList: {
+        //                 шум: "Повышенный шум на изображениях. ",
+        //                 дин: "Динамические артефакты. ",
+        //             },
+        //             playlistInfo: {
+        //                 id: "1-0",
+        //                 title: 'Hip-Hop Hits',
+        //                 coverImgUrl: 'img/cover.jpeg',
+        //                 trackCount: 4
+        //             },
+        //         },
+        //     partLumbalis: 
+        //         {
+        //             conditionalsList: {
+        //                 шум: "Повышенный шум на изображениях. ",
+        //                 дин: "Динамические артефакты. ",
+        //             },
+        //             playlistInfo: {
+        //                 id: "1-0",
+        //                 title: 'Hip-Hop Hits',
+        //                 coverImgUrl: 'img/cover.jpeg',
+        //                 trackCount: 4
+        //             },
+        //         },
+
+        //     }
+
+        function testVariable() {
+            debugger
+
+            partialFirst()
+
+            let input = document.getElementById("pole");
+            input.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("saveForm").click();
+                }
+            });
+
+            let input2 = document.getElementById("pole2");
+            input2.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("saveForm").click();
+                }
+            });
+
+        }
+
+        function partialFirst() {
+            const proekciaThoracicus = "На рентгенограммах грудного отдела позвоночника в двух проекциях";
+            const proekciaLumbalis = "На рентгенограммах пояснично-крестцового отдела позвоночника в двух проекциях";
+            let osThoracicus = "ось ";
+            let osLumbalis = "ось ";
+            let otdelThoracicus = 'грудного';
+            let otdelLumbalis = 'пояснично-крестцового';
+            let otdelLumbalisForScolios = 'поясничного';
+            let lordThoracicus = "Физиологический грудной кифоз ";
+            let lordLumbalis = "Физиологический поясничный лордоз ";
+            let min = "Минеральная плотность позвонков ";
+            let vysotaThoracicus = "Высота тел позвонков ";
+            let vysotaLumbalis = "Высота тел позвонков ";
+            let klinThoracicus = "Th3, Th4,Th5, Th6, Th7, Th8, Th9, Th10, Th11, Th12"
+            let klinLumbalis = "L1, L2, L3, L4, L5, S1"
+            const rg = 'рентген-признаки'; // используется только в условиях
+            const dg = 'дегенеративно-дистрофических изменений' // используется только в условиях
+            const dgNachalnye = 'начальных дегенеративно-дистрофических изменений' // используется только в условиях
+            const zamykat = 'замыкательные пластинки тел позвонков';
+            let discThoracicus = "Высота межпозвонковых дисков ";
+            let discLumbalis = "Высота межпозвонковых дисков ";
+            let sclerThoracicus = "";
+            let sclerLumbalis = "";
+            let kraevyeThoracicus = "";
+            let kraevyeLumbalis = "";
+            let ost = "";
+            let dugThoracicus = "Дугоотростчатые суставы без особенностей";
+            let dugLumbalis = "Дугоотростчатые суставы без особенностей";
+            let conditionalsThoracicus = "";
+            let conditionalsLumbalis = "";
+            let additionalsThoracicus = "";
+            let additionalsLumbalis = "";
+            let conclusionThoracicus = "Заключение: ";
+            let conclusionLumbalis = "Заключение: ";
+            let conclusionSkolThoracicus = "";
+            let conclusionSkolLumbalis = "";
+            let conclusionPathologyThoracicus = "рентген-признаков патологических изменений не выявлено";
+            let conclusionPathologyLumbalis = "рентген-признаков патологических изменений не выявлено";
+            let conclusionLordThoracicus = "";
+            let conclusionLordLumbalis = "";
+            let conclusionVysotaThoracicus = "";
+            let conclusionVysotaLumbalis = "";
+            let commaForConclusionThoracicus = ""
+            let commaForConclusionLumbalis = ""
+            let commaForConclusion2Thoracicus = ""
+            let commaForConclusion2Lumbalis = ""
+            const space = " ";
+            const dot = ". ";
+            const comma = ", ";
+            let skobkaThoracicus = "";
+            let skobkaLumbalis = "";
+            let skobkaEnd = "";
+            let degDist = "";
+            let degDistThoracicus = "";
+            let degDistLumbalis = "";
+            let nachDegDist = "";
+            let nachDegDistThoracicus = "";
+            let nachDegDistLumbalis = "";
+            let osteohThoracicus = "";
+            let osteohLumbalis = "";
+            let spondilezThoracicus = "";
+            let spondilezLumbalis = "";
+            let spondiloartrozThoracicus = "";
+            let spondiloartrozLumbalis = "";
+            let abz = String.fromCharCode(13, 10);
+
+            const conditionalsList = {
+                шум: "Повышенный шум на изображениях. ",
+                дин: "Динамические артефакты. ",
+                мет: "Артефакт металлической плотности. "
+            };
+
+            const additionalsList = {
+                сос: "Обызвествление аорты. ",
+                плот: "Плотная тень размерами 11х15мм в проекции ... - артефакт? "
+            };
+
+            const lordList = {
+                вып: "выпрямлен",
+                сгл: "сглажен",
+                усил: "усилен"
+            };
+
+            const vysList = {
+                клин: "снижена по передней поверхности до 1/4",
+            };
+
+            const discList = {
+                '3-7': "снижена в сегменте(-ах): Th3-Th4, Th4-Th5, Th5-Th6, Th6-Th7",
+                '3-12': "снижена в сегменте(-ах): Th3-Th4, Th4-Th5, Th5-Th6, Th6-Th7, Th7-Th8, Th8-Th9, Th9-Th10, Th10-Th11, Th11-Th12",
+                '1-5': "снижена в сегменте(-ах): L1-L2, L2-L3, L3-L4, L4-L5, L5-S1",
+                '2-4': "снижена в сегменте(-ах): L2-L3, L3-L4, L4-L5",
+                '4-5': "снижена в сегменте(-ах): L4-L5, L5-S1"
+            };
+            
+            const sclerList = {
+                суб: comma + "субхондральный склероз тел позвонков",
+                упл: comma + "уплотнены " + zamykat,
+                // подч: comma + "подчёркнуты " + zamykat
+            };
+
+            const kraevyeList = {
+                спонд: comma + "спондилофиты по задним и по передним поверхностям тел позвонков",
+                скоб: comma + "спондилофиты по задним и скобкообразного характера по переднебоковым поверхностям тел позвонков"
+            };
+           
+            const dugList = {
+                дугуп: "Уплотнены суставные поверхности дугоотростчатых суставов",
+                дугпо: "Подчёркнуты суставные поверхности дугоотростчатых суставов",
+                дуго: "Уплотнены суставные поверхности и неравномерно снижена высота рентгеновской суставной щели дугоотростчатых суставов"
+            };
+            
+
+            // УБИРАЕТ АБЗАЦ ЕСЛИ НЕТ УСЛОВИЙ И ДОПОЛНЕНИЙ
+
+
+            // МИНЕРАЛЬНАЯ ПЛОТНОСТЬ
+            // if (pole.value.includes('мин')) {
+            //     min += "снижена";
+            // } else {
+            //     min += "сохранена";
+            // }
+
+            // ИЗМЕНЕНИЯ В ОСТАЛЬНЫХ ОТДЕЛАХ
+            // if (pole.value.includes('ост')) {
+            //     ost = "Изменения в остальных отделах менее выражены" + dot;
+            // }
+
+            // if (pole.value.includes('выр')) {
+            //     conclusionPathology = rg + space + "выраженных" + space + dg;
+            // } else if (pole.value.includes('уме')) {
+            //     conclusionPathology = rg + space + "умеренных" + space + dg;
+            // }
+
+            // УСЛОВИЯ
+            conditionalsThoracicus += autoreplace(conditionalsList, pole);
+            conditionalsLumbalis += autoreplace(conditionalsList, pole2);
+
+            // ДОПОЛНЕНИЯ
+            additionalsThoracicus += autoreplace(additionalsList, pole);
+            additionalsLumbalis += autoreplace(additionalsList, pole2);
+
+            // ОСЬ
+            osThoracicus += autoreplaceOs(pole)[0];
+            conclusionSkolThoracicus = autoreplaceOs(pole, otdelThoracicus)[1];
+
+            osLumbalis += autoreplaceOs(pole2)[0];
+            conclusionSkolLumbalis = autoreplaceOs(pole2, otdelLumbalisForScolios)[1];
+
+            // ЛОРДОЗ КИФОЗ
+            lordThoracicus += autoreplaceLord(lordList, pole)[0];
+            conclusionLordThoracicus = autoreplaceLord(lordList, pole)[1];
+            lordLumbalis += autoreplaceLord(lordList, pole2)[0];
+            conclusionLordLumbalis = autoreplaceLord(lordList, pole2)[1];
+
+            // ВЫСОТА ТЕЛ ПОЗВОНКОВ
+            vysotaThoracicus += autoreplaceVysota(vysList, pole, klinThoracicus)[0];
+            conclusionVysotaThoracicus += autoreplaceVysota(vysList, pole, klinThoracicus)[1];
+            vysotaLumbalis += autoreplaceVysota(vysList, pole2, klinLumbalis)[0];
+            conclusionVysotaLumbalis += autoreplaceVysota(vysList, pole2, klinLumbalis)[1];
+
+            // ВЫСОТА МЕЖПОЗВОНКОВЫХ ДИСКОВ
+            discThoracicus += autoreplaceDisc(discList, pole);
+            discLumbalis += autoreplaceDisc(discList, pole2);
+
+            // СУБХОНДРАЛЬНЫЙ СКЛЕРОЗ
+            sclerThoracicus = autoreplaceScler(sclerList, pole, null, comma, zamykat)[0];
+            osteohThoracicus = autoreplaceScler(sclerList, pole, null, comma)[1];
+            sclerLumbalis += autoreplaceScler(sclerList, pole2, null, comma, zamykat)[0];
+            osteohLumbalis += autoreplaceScler(sclerList, pole2, null, comma)[1];
+
+            // СПОНДИЛОФИТЫ
+            kraevyeThoracicus = autoreplaceKraevye(kraevyeList, pole)[0];
+            spondilezThoracicus = autoreplaceKraevye(kraevyeList, pole, null, comma)[1];
+            kraevyeLumbalis = autoreplaceKraevye(kraevyeList, pole2)[0];
+            spondilezLumbalis = autoreplaceKraevye(kraevyeList, pole2, null, comma)[1];
+
+            // ДУГООТРОСТЧАТЫЕ СУСТАВЫ
+            dugThoracicus = autoreplaceDug(dugList, pole)[0];
+            spondiloartrozThoracicus = autoreplaceDug(dugList, pole, null, comma)[1];
+            dugLumbalis = autoreplaceDug(dugList, pole2)[0];
+            spondiloartrozLumbalis = autoreplaceDug(dugList, pole2, null, comma)[1];
+
+            // ЗАКЛЮЧЕНИЕ
+            // грудной отдел
+            conclusionPathologyThoracicus = isRg(pole, conclusionSkolThoracicus, conclusionLordThoracicus, conclusionVysotaThoracicus, null, rg, space, dg, null, osteohThoracicus, spondilezThoracicus, spondiloartrozThoracicus, dgNachalnye, null, null, otdelThoracicus)[0];
+
+            skobkaThoracicus = isRg(pole, null, null, null, null, null, space, null, null, osteohThoracicus, spondilezThoracicus, spondiloartrozThoracicus, null)[1];
+
+            spondiloartrozThoracicus = isRg(pole, conclusionSkolThoracicus, conclusionLordThoracicus, conclusionVysotaThoracicus, null, rg, space, dg, null, osteohThoracicus, spondilezThoracicus, spondiloartrozThoracicus, dgNachalnye)[2];
+
+            nachDegDistThoracicus = isRg(pole, conclusionSkolThoracicus, conclusionLordThoracicus, conclusionVysotaThoracicus, null, rg, space, dg, null, osteohThoracicus, spondilezThoracicus, spondiloartrozThoracicus, dgNachalnye, nachDegDist)[3];
+
+            degDistThoracicus = isRg(pole, conclusionSkolThoracicus, conclusionLordThoracicus, conclusionVysotaThoracicus, null, rg, space, dg, null, osteohThoracicus, spondilezThoracicus, spondiloartrozThoracicus, dgNachalnye, nachDegDist, degDist)[4];
+
+            // пояснично-крестцовый отдел
+            conclusionPathologyLumbalis = isRg(pole2, conclusionSkolLumbalis, conclusionLordLumbalis, conclusionVysotaLumbalis, null, rg, space, dg, null, osteohLumbalis, spondilezLumbalis, spondiloartrozLumbalis, dgNachalnye, null, null, otdelLumbalis)[0];
+
+            skobkaLumbalis = isRg(pole2, null, null, null, null, null, space, null, null, osteohLumbalis, spondilezLumbalis, spondiloartrozLumbalis, null)[1];
+
+            spondiloartrozLumbalis = isRg(pole2, conclusionSkolLumbalis, conclusionLordLumbalis, conclusionVysotaLumbalis, null, rg, space, dg, null, osteohLumbalis, spondilezLumbalis, spondiloartrozLumbalis, dgNachalnye)[2];
+
+            nachDegDistLumbalis = isRg(pole2, conclusionSkolLumbalis, conclusionLordLumbalis, conclusionVysotaLumbalis, null, rg, space, dg, null, osteohLumbalis, spondilezLumbalis, spondiloartrozLumbalis, dgNachalnye, nachDegDist)[3];
+
+            degDistLumbalis = isRg(pole2, conclusionSkolLumbalis, conclusionLordLumbalis, conclusionVysotaLumbalis, null, rg, space, dg, null, osteohLumbalis, spondilezLumbalis, spondiloartrozLumbalis, dgNachalnye, nachDegDist, degDist)[4];
+
+            // остеохондроз
+            conclusionOsteohThoracicus = skobkaThoracicus + (osteohThoracicus + spondilezThoracicus + spondiloartrozThoracicus).replace(/,(?![^,]*,)/m, ')').trim();
+
+            conclusionOsteohLumbalis = skobkaLumbalis + (osteohLumbalis + spondilezLumbalis + spondiloartrozLumbalis).replace(/,(?![^,]*,)/m, ')').trim();
+
+            // вторая запятая если есть клин или скол
+            if (conclusionVysotaThoracicus && conclusionSkolThoracicus) {
+                commaForConclusion2Thoracicus = comma;
+            }
+            if (conclusionVysotaLumbalis && conclusionSkolLumbalis) {
+                commaForConclusion2Lumbalis = comma;
+            }
+
+            // первая запятая если есть дегенеративные, нарушение статики
+            if (degDistThoracicus || nachDegDistThoracicus || conclusionLordThoracicus) {
+                if (conclusionSkolThoracicus || conclusionVysotaThoracicus) {
+                    commaForConclusionThoracicus = comma;
+                }
+            }
+
+            if (degDistLumbalis || nachDegDistLumbalis || conclusionLordLumbalis) {
+                if (conclusionSkolLumbalis || conclusionVysotaLumbalis) {
+                    commaForConclusionLumbalis = comma;
+                }
+            }
+
+            // итоговое заключение грудной
+            conclusionThoracicus += conclusionPathologyThoracicus + conclusionOsteohThoracicus + conclusionLordThoracicus + commaForConclusionThoracicus + conclusionSkolThoracicus + commaForConclusion2Thoracicus + conclusionVysotaThoracicus;
+
+            // итоговое заключение пояснично-крестцовый
+            conclusionLumbalis += conclusionPathologyLumbalis + conclusionOsteohLumbalis + conclusionLordLumbalis + commaForConclusionLumbalis + conclusionSkolLumbalis + commaForConclusion2Lumbalis + conclusionVysotaLumbalis;
+
+            // ИТОГ ГРУДНОЙ
+            let partThoracicus = `${conditionalsThoracicus}${proekciaThoracicus} ${osThoracicus}.${abz}${lordThoracicus}.${abz}${vysotaThoracicus}.${abz}${min}.${abz}${discThoracicus}${sclerThoracicus}${kraevyeThoracicus}.${ost}${abz}${dugThoracicus}.${abz}${additionalsThoracicus}${conclusionThoracicus}.${abz}`
+
+            // ИТОГ ПОЯСНИЧНО-КРЕСТЦОВЫЙ
+            partLumbalis = conditionalsLumbalis + proekciaLumbalis + space + osLumbalis + dot + abz + lordLumbalis + dot + abz + vysotaLumbalis + dot + abz + min + dot + abz + discLumbalis + sclerLumbalis + kraevyeLumbalis + dot + ost + abz + dugLumbalis + dot + abz + additionalsLumbalis + conclusionLumbalis + dot;
+
+            document.getElementById("show").value = partThoracicus + abz + partLumbalis;
+
+            // document.getElementById("show").innerText = result_list;      
+            // pro_okno = document.getElementById("pro").innerHTML;
+        }
+
+        function autoreplace(list, pole) {
+            let result = "";
+            for (let key in list) {
+                if (pole.value.includes(key)) {
+                    result += list[key];
+                }
+            }
+            return result;
+        }
+
+        function autoreplaceOs(pole, otdel, conclusionSkol) {
+            let result = "не отклонена";
+            let osSide = 'вправо';
+            conclusionSkol = "";
+            if (pole.value.includes('лев')) {
+                osSide = "влево";
+            }
+            if (pole.value.includes('отк')) {
+                result = `умеренно отклонена ${osSide}`;
+            } else if (pole.value.includes('скол')) {
+                result = `С-образно сколиотически искривлена ${osSide} без ротации тел позвонков. Угол вершиной на уровне Th8 5,5гр. На высоте искривления определяется минимальное снижение высоты противоположных отделов межпозвонковых дисков`,
+                conclusionSkol = `С-образной сколиотической деформации ${otdel} отдела позвоночника I степени (по В.Д. Чаклину)`;
+            }
+            return [result, conclusionSkol];
+        }
+
+        function autoreplaceLord(list, pole, conclusionLord, rg) {
+            let result = "сохранён";
+            conclusionLord = '';
+            for (let key in list) {
+                if (pole.value.includes(key)) {
+                    result = list[key];
+                    conclusionLord = " с нарушением статики";
+                }
+            }
+            return [result, conclusionLord];
+        }
+
+        function autoreplaceVysota(list, pole, klin, conclusionVysota, rg) {
+            let result = "не снижена";
+            conclusionVysota = '';
+            for (let key in list) {
+                if (pole.value.includes(key)) {
+                    result = klin + " " + list[key];
+                    conclusionVysota = `мягкой клиновидной деформации тел позвонков ${klin}`;
+                }
+            }
+            return [result, conclusionVysota];
+        }
+
+        function autoreplaceDisc(list, pole) {
+            let result = "не снижена";
+            for (let key in list) {
+                if (pole.value.includes(key)) {
+                    result = list[key];
+                }
+            }
+            return result;
+        }
+
+        function autoreplaceScler(list, pole, osteoh, comma, zamykat) {
+            let result = "";
+            osteoh = "";
+            if (pole.value.includes('подч')) {
+                result = comma + "подчёркнуты " + zamykat;
+            }
+            for (let key in list) {
+                if (pole.value.includes(key)) {
+                    result = list[key];
+                    osteoh = "остеохондроз" + comma;
+                }
+            }
+            return [result, osteoh];
+        }
+
+        function autoreplaceKraevye(list, pole, spondilez, comma) {
+            let result = "";
+            spondilez = "";
+            for (let key in list) {
+                if (pole.value.includes(key)) {
+                    result = list[key];
+                }
+            }
+            if (pole.value.includes("скоб")) {
+                spondilez = "спондилёз" + comma;
+            }
+            return [result, spondilez];
+        }
+
+        function autoreplaceDug(list, pole, spondiloartroz, comma) {
+            let result = "Дугоотростчатые суставы без особенностей";
+            spondiloartroz = "";
+            for (let key in list) {
+                if (pole.value.includes(key)) {
+                    result = list[key];
+                    spondiloartroz = "спондилоартроз" + comma;
+                }
+            }
+            return [result, spondiloartroz];
+        }
+
+        function isRg(pole, conclusionSkol, conclusionLord, conclusionVysota, conclusionPathology, rg, space, dg, skobka, osteoh, spondilez, spondiloartroz, dgNachalnye, nachDegDist, degDist, otdel) {
+            conclusionPathology = "рентген-признаков патологических изменений не выявлено";
+            skobka = '';
+            if (conclusionSkol || conclusionLord || conclusionVysota) {
+                conclusionPathology = rg + space;
+            }
+            if (pole.value.includes('подч') || pole.value.includes("дугпо")) {
+                conclusionPathology = rg + space + dgNachalnye + ` ${otdel} отдела позвоночника`;
+                spondiloartroz = "";
+                nachDegDist = true;
+            }
+            if (osteoh || spondilez || spondiloartroz) {
+                conclusionPathology = rg + space + dg + ` ${otdel} отдела позвоночника`;
+                skobka = space + "(";
+                degDist = true;
+            }
+            return [conclusionPathology, skobka, spondiloartroz, nachDegDist, degDist]
+        }
+
+        function autoreplaceOsSide(pole) {
+            let result = "вправо";
+                if (pole.value.includes("лев")) {
+                    result = 'влево';
+                }
+            return result;
+        }
+
+        function copy_to_clipboard(show) {
+            document.getElementById(show).select();
+            document.execCommand('copy');
+        }
+
+    </script>
+
+
+</head>
+
+
+
+<body id="main_body">
+
+
+
+    <div id="form_container">
+
+
+        <!-- ВЫБОР ИЗ СПИСКА -->
+        <!-- 
+     <div id="form_item_1">
+
+      <form id="form_48871" class="appnitro" method="post" action="">
+        <div class="form_description">
+          <h2>Шейный отдел позвоночника</h2>
+          <p>
+            description
+          </p>
+        </div>
+
+        <div class="my_container">
+          
+          <div class="my_card">
+            <select class="form-control" id="list" name="list" multiple>
+               <option disabled>------------------ОСЬ</option>
+              <option value="os_um_otklonena">умеренно отклонена</option>
+            </select>
+          </div>
+        </div>
+
+
+      </form>
+
+
+    </div> 
+  -->
+
+
+        <!-- СОКРАЩЕНИЯ -->
+        <div class="mydivh1">
+            <ul class="my_ul">
+                <li>отк</li>
+                <li>скол</li>
+                <li>лев</li>
+                <li>вып</li>
+                <li>сгл</li>
+                <li>мин</li>
+                <li>3-7</li>
+                <li>3-12</li>
+                <li>суб</li>
+                <li>упл</li>
+                <li>подч</li>
+                <li>спонд</li>
+                <li>скоб</li>
+                <li>ост</li>
+                <li>дугуп</li>
+                <li>дугпо</li>
+                <li>дуг</li>
+                <li>выр</li>
+                <li>уме</li>
+                <li>шум</li>
+                <li>дин</li>
+                <li>мет</li>
+                <li>арт</li>
+                <li>хир</li>
+                <li>сос</li>
+                <li>плот</li>
+            </ul>
+        </div>
+
+
+        <!-- МЕНЮ -->
+        <div id="form_item_2">
+
+            <div class="page">
+                <nav class="page__menu menu">
+                    <ul class="menu__list r-list">
+                        <li class="menu__group"><a href="chest.html" class="menu__link r-link text-underlined">ОГК</a>
+                        </li>
+                        <li class="menu__group"><a href="knee.html" class="menu__link r-link text-underlined">КОЛ</a>
+                        </li>
+                        <li class="menu__group"><a href="ankle.html" class="menu__link r-link text-underlined">ГОЛ</a>
+                        </li>
+                        <li class="menu__group"><a href="hip.html" class="menu__link r-link text-underlined">ТБС</a>
+                        </li>
+                        <li class="menu__group"><a href="wrist.html" class="menu__link r-link text-underlined">ЛУЧ</a>
+                        </li>
+                        <li class="menu__group"><a href="shoulder.html"
+                                class="menu__link r-link text-underlined">ПЛЕЧ</a></li>
+                    </ul>
+
+                    <ul class="menu__list r-list">
+                        <li class="menu__group"><a href="cervicalis.html"
+                                class="menu__link r-link text-underlined">ШОП</a></li>
+                        <li class="menu__group"><a href="thoracicus.html"
+                                class="menu__link r-link text-underlined">ГОП</a></li>
+                        <li class="menu__group"><a href="lumbalis.html"
+                                class="menu__link r-link text-underlined">ПОП</a></li>
+                        <li class="menu__group"><a href="thoracicus_lumbalis.html" class="menu__link">ГПОП</a></li>
+                        <li class="menu__group"><a href="hand.html" class="menu__link r-link text-underlined">КИСТЬ</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <br>
+
+
+            <!-- ТЕКСТОВАЯ ОБЛАСТЬ С ВЫВОДОМ ПРОТОКОЛА -->
+            <textarea variable="yname" id="show" class="mytextarea" rows="18" cols="90"></textarea><br>
+
+            <!-- ПОЛЕ ВВОДА -->
+            <input class="pole" id="pole" placeholder="Введите текст..."/><br>
+            <input class="pole" id="pole2" placeholder="Введите текст..."/>
+
+            <!-- КНОПКИ -->
+            <li class="buttons">
+                <input id="saveForm" class="my_btn-new" type="submit" name="submit" value="Вывод"
+                    onclick="testVariable()" />
+                <input type="button" class="my_btn-new" value="Скопировать" onclick="copy_to_clipboard('show');">
+            </li>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+
+
+
+<!-- MSFmultiSelect -->
+<script>
+
+    // var list = new MSFmultiSelect(
+    //   document.querySelector('#list'),
+    //   {
+    //     theme: 'theme2',
+    //     selectAll: true,
+    //     searchBox: true,
+    //     width: '500px',
+    //     height: '80px',
+    //     // readOnly: true,
+    //     onChange: function (checked, value, instance) {
+    //       console.log(checked, value, instance);
+    //     },
+    //     // appendTo: '#myselect',
+    //     autoHide: true
+    //   }
+    // )
+
+
+
+</script>
+
+
+
+
+
+</html>

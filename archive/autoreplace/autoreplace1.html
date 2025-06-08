@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система сокращений</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+        }
+        textarea, input, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .abbreviation-list {
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .abbreviation-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Система сокращений</h1>
+    
+    <div class="container">
+        <div class="column">
+            <h2>Добавить сокращение</h2>
+            <input type="text" id="abbrInput" placeholder="Сокращение (например, 'пж')">
+            <input type="text" id="phraseInput" placeholder="Полная фраза (например, 'пожалуйста')">
+            <button id="addBtn">Добавить</button>
+            
+            <h2>Мои сокращения</h2>
+            <div id="abbreviationList" class="abbreviation-list"></div>
+        </div>
+        
+        <div class="column">
+            <h2>Текстовое поле</h2>
+            <textarea id="textInput" rows="10" placeholder="Введите текст здесь... Ваши сокращения будут автоматически заменяться."></textarea>
+            <button id="replaceBtn">Заменить все сокращения</button>
+        </div>
+    </div>
+
+    <script>
+        // Загрузка сокращений из localStorage
+        let abbreviations = JSON.parse(localStorage.getItem('abbreviations')) || {};
+        
+        // Элементы DOM
+        const abbrInput = document.getElementById('abbrInput');
+        const phraseInput = document.getElementById('phraseInput');
+        const addBtn = document.getElementById('addBtn');
+        const abbrList = document.getElementById('abbreviationList');
+        const textInput = document.getElementById('textInput');
+        const replaceBtn = document.getElementById('replaceBtn');
+        
+        // Отображение списка сокращений
+        function renderAbbreviations() {
+            abbrList.innerHTML = '';
+            
+            for (const [abbr, phrase] of Object.entries(abbreviations)) {
+                const item = document.createElement('div');
+                item.className = 'abbreviation-item';
+                
+                const text = document.createElement('span');
+                text.textContent = `${abbr} → ${phrase}`;
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '×';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = () => deleteAbbreviation(abbr);
+                
+                item.appendChild(text);
+                item.appendChild(deleteBtn);
+                abbrList.appendChild(item);
+            }
+        }
+        
+        // Добавление нового сокращения
+        function addAbbreviation() {
+            const abbr = abbrInput.value.trim();
+            const phrase = phraseInput.value.trim();
+            
+            if (abbr && phrase) {
+                abbreviations[abbr] = phrase;
+                localStorage.setItem('abbreviations', JSON.stringify(abbreviations));
+                
+                abbrInput.value = '';
+                phraseInput.value = '';
+                
+                renderAbbreviations();
+            } else {
+                alert('Пожалуйста, заполните оба поля!');
+            }
+        }
+        
+        // Удаление сокращения
+        function deleteAbbreviation(abbr) {
+            delete abbreviations[abbr];
+            localStorage.setItem('abbreviations', JSON.stringify(abbreviations));
+            renderAbbreviations();
+        }
+        
+        // Замена сокращений в тексте
+        function replaceAbbreviations() {
+            let text = textInput.value;
+            
+            // Сортируем сокращения по длине (от самых длинных к самым коротким)
+            const sortedAbbrs = Object.keys(abbreviations).sort((a, b) => b.length - a.length);
+            
+            for (const abbr of sortedAbbrs) {
+                // Создаем регулярное выражение для поиска целого слова
+                const regex = new RegExp(`(^|\\s)${escapeRegExp(abbr)}(?=\\s|$|[.,!?])`, 'g');
+                text = text.replace(regex, `$1${abbreviations[abbr]}`);
+            }
+            
+            // Устанавливаем новый текст и перемещаем курсор в конец
+            textInput.value = text;
+            textInput.selectionStart = text.length;
+            textInput.selectionEnd = text.length;
+        }
+        
+        // Экранирование специальных символов для регулярных выражений
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        
+        // Автозамена при вводе (с задержкой)
+        let replaceTimeout;
+        textInput.addEventListener('input', () => {
+            clearTimeout(replaceTimeout);
+            replaceTimeout = setTimeout(() => {
+                replaceAbbreviations();
+            }, 500); // Задержка 0.5 секунды после окончания ввода
+        });
+        
+        // Обработчики событий
+        addBtn.addEventListener('click', addAbbreviation);
+        replaceBtn.addEventListener('click', replaceAbbreviations);
+        
+        // Инициализация
+        renderAbbreviations();
+    </script>
+</body>
+</html>

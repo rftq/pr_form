@@ -1,0 +1,410 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Кисть</title>
+  <link rel="stylesheet" type="text/css" href="view.css" media="all">
+  <script type="text/javascript" src="view.js"></script>
+  <link rel="stylesheet" type="text/css" href="msfmultiselect.css" />
+  <script src="msfmultiselect.js"></script>
+  <!-- <script type="text/javascript" src="autorep.js"></script> -->
+  <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+
+  <script>
+    function testVariable() {
+      debugger
+
+      let result_list = [];
+      if (document.getElementById("list").length > 0) {
+        for (let i = 0; i < document.getElementById("list").length; i++) {
+          let option = document.getElementById("list").options[i];
+          if (option.selected) {
+            result_list += option.value;
+          }
+        }
+      }
+
+      let proekcia = "На обзорных рентгенограммах правой кисти в двух проекциях";
+      let min = "Минеральная плотность позвонков сохранена";
+      let vysota = "Высота рентгеновской суставной щели не снижена";
+      let vysotaNext = "";
+      let scler = "субхондральный склероз не определяется";
+      let sclerNext = "";
+      let deformation = "";
+      let deformationNext = "";
+      let kraevye = "спондилофиыты не визуализируются";
+      let conclusion = "Заключение: рентген-признаков патологических изменений не выявлено";
+
+      let fingVysota = "";
+      let fingScler = "";
+      let fingDef = "";
+      let space = " ";
+      let dot = ". ";
+      let comma = "";
+      let skobka = "";
+      let skobkaEnd = "";
+
+      const fingerVysota = {
+        pro: "проксимальном межфаланговом суставе",
+        p1: "1-го",
+        p2: "2-го",
+        p3: "3-го",
+        p4: "4-го",
+        p5: "5-го",
+        dis: "дистальном межфаланговом суставе",
+        d1: "1-го",
+        d2: "2-го",
+        d3: "3-го",
+        d4: "4-го",
+        d5: "5-го"
+
+      };
+
+      const fingerScler = {
+        sclerPro: "проксимального межфалангового сустава",
+        sub1: "1-го",
+        sub2: "2-го",
+        sub3: "3-го",
+        sub4: "4-го",
+        sub5: "5-го",
+        sclerDis: "дистального межфалангового сустава",
+        sub6: "1-го",
+        sub7: "2-го",
+        sub8: "3-го",
+        sub9: "4-го",
+        sub10: "5-го",
+      };
+
+      const fingerDeformation = {
+        defPro: "проксимального межфалангового сустава",
+        def1: "1-го",
+        def2: "2-го",
+        def3: "3-го",
+        def4: "4-го",
+        def5: "5-го",
+        defDis: "дистального межфалангового сустава",
+        def6: "1-го",
+        def7: "2-го",
+        def8: "3-го",
+        def9: "4-го",
+        def10: "5-го",
+      };
+
+      let keysFingerVysota = Object.keys(fingerVysota);
+      let keysFingerScler = Object.keys(fingerScler);
+      let keysFingerDeformation = Object.keys(FingerDeformation);
+
+
+      for (i = 0; i < keysFingerVysota.length; i++) {
+        if (result_list.includes(keysFingerVysota[i])) {
+          if (keysFingerVysota[i] == "pro" || keysFingerVysota[i] == "dis") {
+            vysotaNext += fingerVysota[keysFingerVysota[i]] + " ";
+          } else { vysotaNext += fingerVysota[keysFingerVysota[i]] + ", "; }
+          vysota = "Высота рентгеновской суставной щели снижена в ";
+          fingVysota = "пальца(-ев)";
+        }
+      }
+      vysotaNext = vysotaNext.replace(/,(?![^,]*,)/m, '');
+
+
+      for (i = 0; i < keysFingerScler.length; i++) {
+        if (result_list.includes(keysFingerScler[i])) {
+          if (keysFingerScler[i] == "defPro" || keysFingerScler[i] == "sclerDis") {
+            sclerNext += fingerScler[keysFingerScler[i]] + " ";
+          } else { sclerNext += fingerScler[keysFingerScler[i]] + ", "; }
+          scler = "Субхондральный склероз суставной поверхности ";
+          fingScler = "пальца(-ев)";
+        }
+      }
+      sclerNext = sclerNext.replace(/,(?![^,]*,)/m, '');
+
+
+      for (i = 0; i < keysFingerDeformation.length; i++) {
+        if (result_list.includes(keysFingerDeformation[i])) {
+          if (keysFingerDeformation[i] == "defPro" || keysFingerDeformation[i] == "defDis") {
+            deformationNext += FingerDeformation[keysFingerDeformation[i]] + " ";
+          } else { deformationNext += FingerDeformation[keysFingerDeformation[i]] + ", "; }
+          deformation = "Деформация суставной поверхности ";
+          fingDef = "пальца(-ев)";
+        }
+      }
+      deformationNext = deformationNext.replace(/,(?![^,]*,)/m, '');
+
+
+      // отдельно дистальных перебор объекта
+      // for (i = 0; i < keysFingerDistal.length; i++) {
+      //   if (result_list.includes(keysFingerDistal[i])) {
+      //     distal += fingerDistal[keysFingerDistal[i]] + ", ";
+      //     vysota = "Высота рентгеновской суставной щели снижена в ";
+      //     fingDistal = "пальца(-ев)";
+      //     comma = ", ";
+      //   }
+      // }
+
+      // distal = distal.replace(/,(?![^,]*,)/m, '');
+
+
+      // if (distal == "дистальном межфаланговом суставе ") {
+      //   distal = "";
+      // }
+
+      // if (proximal == ""){
+      //   comma = "";
+      // }
+
+
+
+      // простой перебор по массиву без ключ-значение по value
+      // for (i = 0; i < fingerDistal.length; ++i) {
+      //   if (result_list.includes(fingerDistal[i])) {
+      //     distal += fingerDistal[i] + ", ";
+      //     vysota = "Высота рентгеновской суставной щели снижена в ";
+      //     fing = "пальца(-ев)";
+      //   }
+      // }
+
+      // distal = distal.replace(/,(?![^,]*,)/m, '');
+
+      // if (distal == "дистальном межфаланговом суставе ") {
+      //   distal = "";
+      // }
+
+
+
+
+      // рабочий вариант
+      // if (result_list.includes("1p")) {
+      //   proximal += "1-го, ";
+      // }
+      // if (result_list.includes("2p")) {
+      //   proximal += "2-го, ";
+      // }
+      // if (result_list.includes("3p")) {
+      //   proximal += "3-го, ";
+      // }
+      // if (result_list.includes("4p")) {
+      //   proximal += "4-го, ";
+      // }
+      // if (result_list.includes("5p")) {
+      //   proximal += "5-го, ";
+      // }
+
+      // proximal = proximal.replace(/,(?![^,]*,)/m, '');
+
+      // if (proximal != "проксимальном межфаланговом суставе ") {
+      //   vysota = "Высота рентгеновской суставной щели снижена в ";
+      //   fingProximal = "пальца(-ев)";
+      // } else {
+      //   proximal = "";
+      // }
+
+
+      // if (result_list.includes("1d")) {
+      //   distal += "1-го, ";
+      // }
+      // if (result_list.includes("2d")) {
+      //   distal += "2-го, ";
+      // }
+      // if (result_list.includes("3d")) {
+      //   distal += "3-го, ";
+      // }
+      // if (result_list.includes("4d")) {
+      //   distal += "4-го, ";
+      // }
+      // if (result_list.includes("5d")) {
+      //   distal += "5-го, ";
+      // }
+
+      // distal = distal.replace(/,(?![^,]*,)/m, '');
+
+      // if (distal != "дистальном межфаланговом суставе ") {
+      //   vysota = "Высота рентгеновской суставной щели снижена в ";
+      //   fingDistal = "пальца(-ев)";
+      //   comma = ", ";
+      // } else {
+      //   distal = "";
+      // }
+
+      // if (proximal == ""){
+      // comma = "";
+      //     }
+
+
+
+      // document.getElementById("show").innerText = result_list;      
+      // pro_okno = document.getElementById("pro").innerHTML;
+
+
+
+      document.getElementById("show").innerText = proekcia + vysota + vysotaNext + fingVysota + dot + scler + sclerNext + fingScler + dot + deformation + deformationNext + fingDef + dot;
+
+
+
+
+      let input = document.getElementById("vysota_pole");
+      input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("saveForm").click();
+        }
+      });
+    }
+
+    function copy_to_clipboard(show) {
+      document.getElementById(show).select();
+      document.execCommand('copy');
+    }
+
+  </script>
+
+
+
+
+
+</head>
+
+<body id="main_body">
+
+  <div id="form_container">
+
+    <div id="form_item_1">
+
+
+      <form id="form_48871" class="appnitro" method="post" action="">
+        <div class="form_description">
+          <h2>Кисть</h2>
+          <p><!-- description --></p>
+        </div>
+
+        <div class="my_container">
+
+
+          <div class="my_card">
+            <select class="form-control" id="list" name="list" multiple>
+              <option disabled>---ВЫСОТА---</option>
+              <option value="pro">проксимальном</option>
+              <option value="p1">1-го</option>
+              <option value="p2">2-го</option>
+              <option value="p3">3-го</option>
+              <option value="p4">4-го</option>
+              <option value="p5">5-го</option>
+              <option value="dis">дистальном</option>
+              <option value="d1">1-го</option>
+              <option value="d2">2-го</option>
+              <option value="d3">3-го</option>
+              <option value="d4">4-го</option>
+              <option value="d5">5-го</option>
+              <option disabled>---СУБХ СКЛЕРОЗ---</option>
+              <option value="sclerPro">проксимального</option>
+              <option value="sub1">1-го</option>
+              <option value="sub2">2-го</option>
+              <option value="sub3">3-го</option>
+              <option value="sub4">4-го</option>
+              <option value="sub5">5-го</option>
+              <option value="sclerDis">дистального</option>
+              <option value="sub6">1-го</option>
+              <option value="sub7">2-го</option>
+              <option value="sub8">3-го</option>
+              <option value="sub9">4-го</option>
+              <option value="sub10">5-го</option>
+              <option disabled>---ДЕФОРМАЦИЯ---</option>
+              <option value="defPro">проксимального</option>
+              <option value="def1">1-го</option>
+              <option value="def2">2-го</option>
+              <option value="def3">3-го</option>
+              <option value="def4">4-го</option>
+              <option value="def5">5-го</option>
+              <option value="defDis">дистального</option>
+              <option value="def6">1-го</option>
+              <option value="def7">2-го</option>
+              <option value="def8">3-го</option>
+              <option value="def9">4-го</option>
+              <option value="def10">5-го</option>
+            </select>
+          </div>
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+
+
+
+
+    <div id="form_item_2">
+
+
+      <div class="page">
+        <nav class="page__menu menu">
+          <ul class="menu__list r-list">
+            <li class="menu__group"><a href="thorax.html" class="menu__link r-link text-underlined">ОГК</a></li>
+            <li class="menu__group"><a href="knee.html" class="menu__link r-link text-underlined">КОЛ</a></li>
+            <li class="menu__group"><a href="ankle.html" class="menu__link r-link text-underlined">ГОЛ</a></li>
+            <li class="menu__group"><a href="hip.html" class="menu__link r-link text-underlined">ТБС</a></li>
+            <li class="menu__group"><a href="wrist.html" class="menu__link r-link text-underlined">ЛУЧ</a></li>
+          </ul>
+          <ul class="menu__list r-list">
+            <li class="menu__group"><a href="shoulder.html" class="menu__link r-link text-underlined">ПЛЕЧ</a></li>
+            <li class="menu__group"><a href="cervicalis.html" class="menu__link r-link text-underlined">ШОП</a></li>
+            <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">ГОП</a></li>
+            <li class="menu__group"><a href="lumbalis.html" class="menu__link r-link text-underlined">ПОП</a></li>
+          </ul>
+        </nav>
+      </div>
+      <br>
+
+
+
+      <textarea variable="yname" id="show" class="mytextarea" rows="15" cols="60"></textarea><br>
+
+
+
+      <label>Высота рентгеновской суставной щели</label>
+      <input class="pole" id="vysota_pole" />
+
+      <li class="buttons">
+        <input id="saveForm" class="my_btn-new" type="submit" name="submit" value="Вывод" onclick="testVariable()" />
+        <input type="button" class="my_btn-new" value="Скопировать" onclick="copy_to_clipboard('show');">
+      </li>
+
+    </div>
+
+
+
+  </div>
+
+
+
+</body>
+
+<script>
+
+  var list = new MSFmultiSelect(
+    document.querySelector('#list'),
+    {
+      theme: 'theme2',
+      selectAll: true,
+      searchBox: true,
+      width: '500px',
+      height: '80px',
+      // readOnly: true,
+      onChange: function (checked, value, instance) {
+        console.log(checked, value, instance);
+      },
+      // appendTo: '#myselect',
+      autoHide: false
+    }
+  )
+
+
+
+</script>
+
+
+
+</html>
