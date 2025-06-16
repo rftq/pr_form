@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .editor, .preview {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 70%;
+            height: 100px;
+            font-family: monospace;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button.delete {
+            background-color: #f44336;
+        }
+        button.delete:hover {
+            background-color: #d32f2f;
+        }
+        button.reset {
+            background-color: #ff9800;
+        }
+        button.reset:hover {
+            background-color: #d37f01;
+        }
+        button.edit {
+            background-color: #2196F3;
+        }
+        button.edit:hover {
+            background-color: #0b7dda;
+        }
+        button.newItem {
+            background-color: #607D8B;
+        }
+        button.newItem:hover {
+            background-color: #4d616b;
+        }
+        
+
+
+        .object-container {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background-color: white;
+        }
+        .object-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .object-title {
+            font-weight: bold;
+            /* font-size: 1.1em; */
+        }
+        .object-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .property-row {
+            display: flex;
+            margin-bottom: 8px;
+            align-items: center;
+            border-bottom: 1px solid #c3c3c3;
+        }
+        .property-key {
+            width: 150px;
+            font-weight: bold;
+            padding-right: 10px;
+        }
+        .property-value {
+            flex-grow: 1;
+            width: 400px;
+            /* word-break: break-all; */
+        }
+        .property-actions {
+            /* width: 100px; */
+            text-align: right;
+        }
+        .controls {
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .error {
+            color: #d32f2f;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fde0e0;
+            border-radius: 4px;
+        }
+        .success {
+            color: #388e3c;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+        }
+        #modalOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #editModal {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 400px;
+            max-width: 90%;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .modal-header h3 {
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #777;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group textarea {
+            height: 100px;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .file-upload {
+            padding: 8px 15px;
+            background: #2196F3;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .file-upload:hover {
+            background: #0b7dda;
+        }
+        .add-property-btn {
+            margin-top: 10px;
+            background: #9C27B0;
+        }
+        .add-property-btn:hover {
+            background: #7B1FA2;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1>JSON Editor</h1> -->
+    
+    <div class="controls">
+        <label for="fileInput" class="file-upload">Choose JSON File</label>
+        <input type="file" id="fileInput" accept=".json">
+        <button id="loadBtn" class="edit">Load JSON</button>
+        <button id="saveBtn">Save JSON</button>
+        <button id="addBtn" class="newItem">Add New Item</button>
+        <button id="resetBtn" class="reset">Reset</button>
+        <div id="message" class=""></div>
+    </div>
+    
+    <div class="container">
+        <div class="editor">
+            <p>JSON Data</p>
+            <textarea id="jsonText" placeholder='[{"key": "value"}, {"another": "item"}]'></textarea>
+        </div>
+        
+        <div class="preview">
+            <p>Object View</p>
+            <div id="objectsContainer"></div>
+        </div>
+    </div>
+
+    <div id="modalOverlay">
+        <div id="editModal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Edit Property</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="editKey">Key:</label>
+                <input type="text" id="editKey">
+            </div>
+            <div class="form-group">
+                <label for="editValue">Value:</label>
+                <textarea id="editValue"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelEditBtn">Cancel</button>
+                <button id="saveEditBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const jsonText = document.getElementById('jsonText');
+            const loadBtn = document.getElementById('loadBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const addBtn = document.getElementById('addBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const fileInput = document.getElementById('fileInput');
+            const objectsContainer = document.getElementById('objectsContainer');
+            const message = document.getElementById('message');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const editModal = document.getElementById('editModal');
+            const editKey = document.getElementById('editKey');
+            const editValue = document.getElementById('editValue');
+            const saveEditBtn = document.getElementById('saveEditBtn');
+            const cancelEditBtn = document.getElementById('cancelEditBtn');
+            const modalClose = document.querySelector('.modal-close');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            // App state
+            let currentData = [];
+            let currentEditObjectIndex = null;
+            let currentEditKey = null;
+            
+            // Initialize
+            init();
+            
+            function init() {
+                jsonText.value = JSON.stringify([{}], null, 2);
+                currentData = [{}];
+                renderObjects();
+                setupEventListeners();
+            }
+            
+            function setupEventListeners() {
+                // File operations
+                loadBtn.addEventListener('click', loadFromFile);
+                saveBtn.addEventListener('click', saveToFile);
+                fileInput.addEventListener('change', function() {
+                    if (this.files.length > 0) {
+                        loadFromFile();
+                    }
+                });
+                
+                // Data operations
+                addBtn.addEventListener('click', addNewObject);
+                resetBtn.addEventListener('click', resetData);
+                jsonText.addEventListener('input', validateAndRender);
+                
+                // Modal operations
+                saveEditBtn.addEventListener('click', saveProperty);
+                cancelEditBtn.addEventListener('click', hideModal);
+                modalClose.addEventListener('click', hideModal);
+                modalOverlay.addEventListener('click', function(e) {
+                    if (e.target === modalOverlay) {
+                        hideModal();
+                    }
+                });
+            }
+            
+            function loadFromFile() {
+                const file = fileInput.files[0];
+                if (!file) {
+                    showMessage('Please select a file first', 'error');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        currentData = JSON.parse(e.target.result);
+                        if (!Array.isArray(currentData)) {
+                            currentData = [currentData];
+                        }
+                        jsonText.value = JSON.stringify(currentData, null, 2);
+                        renderObjects();
+                        showMessage('File loaded successfully', 'success');
+                    } catch (error) {
+                        showMessage('Error parsing JSON: ' + error.message, 'error');
+                    }
+                };
+                reader.onerror = function() {
+                    showMessage('Error reading file', 'error');
+                };
+                reader.readAsText(file);
+            }
+            
+            function saveToFile() {
+                try {
+                    const data = JSON.parse(jsonText.value);
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'data.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    showMessage('File saved successfully', 'success');
+                } catch (error) {
+                    showMessage('Error saving JSON: ' + error.message, 'error');
+                }
+            }
+            
+            function resetData() {
+                if (confirm('Are you sure you want to reset all data?')) {
+                    init();
+                    showMessage('Data reset to initial state', 'success');
+                }
+            }
+            
+            function validateAndRender() {
+                try {
+                    currentData = JSON.parse(jsonText.value);
+                    if (!Array.isArray(currentData)) {
+                        currentData = [currentData];
+                    }
+                    renderObjects();
+                    showMessage('Valid JSON', 'success');
+                } catch (error) {
+                    showMessage('Invalid JSON: ' + error.message, 'error');
+                }
+            }
+            
+            function renderObjects() {
+                objectsContainer.innerHTML = '';
+                
+                if (!currentData || currentData.length === 0) {
+                    objectsContainer.innerHTML = '<p>No data available</p>';
+                    return;
+                }
+                
+                currentData.forEach((obj, index) => {
+                    const objectDiv = document.createElement('div');
+                    objectDiv.className = 'object-container';
+                    
+                    // Object header with title and actions
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'object-header';
+                    
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'object-title';
+                    titleDiv.textContent = `Object ${index}`;
+                    
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'object-actions';
+                    
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'edit';
+                    editBtn.textContent = 'Edit';
+                    editBtn.onclick = () => editObject(index);
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete';
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.onclick = () => deleteObject(index);
+                    
+                    actionsDiv.appendChild(editBtn);
+                    actionsDiv.appendChild(deleteBtn);
+                    headerDiv.appendChild(titleDiv);
+                    headerDiv.appendChild(actionsDiv);
+                    objectDiv.appendChild(headerDiv);
+                    
+                    // Object properties
+                    if (typeof obj === 'object' && obj !== null) {
+                        Object.entries(obj).forEach(([key, value]) => {
+                            const propRow = document.createElement('div');
+                            propRow.className = 'property-row';
+                            
+                            const keyDiv = document.createElement('div');
+                            keyDiv.className = 'property-key';
+                            keyDiv.textContent = key;
+                            
+                            const valueDiv = document.createElement('div');
+                            valueDiv.className = 'property-value';
+                            valueDiv.textContent = JSON.stringify(value);
+                            
+                            const actionsDiv = document.createElement('div');
+                            actionsDiv.className = 'property-actions';
+                            
+                            const editBtn = document.createElement('button');
+                            editBtn.className = 'edit';
+                            editBtn.textContent = 'Edit';
+                            editBtn.onclick = (e) => {
+                                e.stopPropagation();
+                                editProperty(index, key);
+                            };
+                            
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'delete';
+                            deleteBtn.textContent = 'Delete';
+                            deleteBtn.onclick = (e) => {
+                                e.stopPropagation();
+                                deleteProperty(index, key);
+                            };
+                            
+                            actionsDiv.appendChild(editBtn);
+                            actionsDiv.appendChild(deleteBtn);
+                            propRow.appendChild(keyDiv);
+                            propRow.appendChild(valueDiv);
+                            propRow.appendChild(actionsDiv);
+                            objectDiv.appendChild(propRow);
+                        });
+                        
+                        // Add property button
+                        const addPropBtn = document.createElement('button');
+                        addPropBtn.className = 'add-property-btn';
+                        addPropBtn.textContent = '+ Add Property';
+                        addPropBtn.onclick = () => addPropertyToObject(index);
+                        objectDiv.appendChild(addPropBtn);
+                    } else {
+                        // For non-object values
+                        const valueDiv = document.createElement('div');
+                        valueDiv.textContent = JSON.stringify(obj);
+                        objectDiv.appendChild(valueDiv);
+                    }
+                    
+                    objectsContainer.appendChild(objectDiv);
+                });
+            }
+            
+            function addNewObject() {
+                try {
+                    currentData = JSON.parse(jsonText.value) || [];
+                    if (!Array.isArray(currentData)) {
+                        currentData = [currentData];
+                    }
+                    
+                    currentData.push({});
+                    jsonText.value = JSON.stringify(currentData, null, 2);
+                    renderObjects();
+                    showMessage('New object added', 'success');
+                } catch (error) {
+                    showMessage('Error adding object: ' + error.message, 'error');
+                }
+            }
+            
+            function editObject(index) {
+                currentEditObjectIndex = index;
+                const obj = currentData[index];
+                
+                if (typeof obj !== 'object' || obj === null) {
+                    modalTitle.textContent = 'Edit Value';
+                    editKey.value = '';
+                    editValue.value = JSON.stringify(obj);
+                    showModal();
+                    return;
+                }
+                
+                // For objects, edit the first property or show message
+                const keys = Object.keys(obj);
+                if (keys.length === 0) {
+                    showMessage('Object has no properties to edit', 'error');
+                    return;
+                }
+                
+                editProperty(index, keys[0]);
+            }
+            
+            function deleteObject(index) {
+                if (confirm('Are you sure you want to delete this object?')) {
+                    currentData.splice(index, 1);
+                    jsonText.value = JSON.stringify(currentData, null, 2);
+                    renderObjects();
+                    showMessage('Object deleted', 'success');
+                }
+            }
+            
+            function addPropertyToObject(index) {
+                currentEditObjectIndex = index;
+                currentEditKey = null;
+                modalTitle.textContent = 'Add New Property';
+                editKey.value = '';
+                editValue.value = '';
+                showModal();
+            }
+            
+            function editProperty(index, key) {
+                const obj = currentData[index];
+                currentEditObjectIndex = index;
+                currentEditKey = key;
+                modalTitle.textContent = 'Edit Property';
+                editKey.value = key;
+                editValue.value = JSON.stringify(obj[key]);
+                showModal();
+            }
+            
+            function deleteProperty(index, key) {
+                if (confirm(`Are you sure you want to delete property "${key}"?`)) {
+                    delete currentData[index][key];
+                    jsonText.value = JSON.stringify(currentData, null, 2);
+                    renderObjects();
+                    showMessage('Property deleted', 'success');
+                }
+            }
+            
+            function saveProperty() {
+                try {
+                    const key = editKey.value.trim();
+                    const valueStr = editValue.value.trim();
+                    
+                    if (currentEditKey === null && !key) {
+                        showMessage('Property name cannot be empty', 'error');
+                        return;
+                    }
+                    
+                    // Parse value if it looks like JSON, otherwise keep as string
+                    let value;
+                    try {
+                        value = valueStr ? JSON.parse(valueStr) : '';
+                    } catch {
+                        value = valueStr;
+                    }
+                    
+                    const obj = currentData[currentEditObjectIndex];
+                    
+                    if (typeof obj !== 'object' || obj === null) {
+                        // Replace non-object with new value
+                        currentData[currentEditObjectIndex] = value;
+                    } else {
+                        if (currentEditKey !== null && key !== currentEditKey) {
+                            // Key changed - delete old key
+                            delete obj[currentEditKey];
+                        }
+                        obj[key] = value;
+                    }
+                    
+                    jsonText.value = JSON.stringify(currentData, null, 2);
+                    renderObjects();
+                    hideModal();
+                    showMessage('Changes saved', 'success');
+                } catch (error) {
+                    showMessage('Error saving: ' + error.message, 'error');
+                }
+            }
+            
+            function showModal() {
+                modalOverlay.style.display = 'flex';
+            }
+            
+            function hideModal() {
+                modalOverlay.style.display = 'none';
+            }
+            
+            function showMessage(text, type) {
+                message.textContent = text;
+                message.className = type;
+            }
+        });
+    </script>
+</body>
+</html>
