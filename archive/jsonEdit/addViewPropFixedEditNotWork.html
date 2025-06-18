@@ -55,9 +55,9 @@
         button.reset {
             background-color: #ff9800;
         }
-        button.add-property {
+        /* button.add-property {
             background-color: #607D8B;
-        }
+        } */
         button.add-property {
             /* margin-top: 10px; */
             background: #9C27B0;
@@ -208,8 +208,8 @@
             text-align: center;
         }
         #propertiesContainer {
-            /* max-height: 400px;
-            overflow-y: auto; */
+            /* max-height: 400px; */
+            /* overflow-y: auto; */
             padding: 10px;
             background: #f9f9f9;
             border-radius: 5px;
@@ -248,11 +248,11 @@
     </div>
 
     <!-- Поле для добавления свойств внизу -->
-    <div class="quick-add">
+    <!-- <div class="quick-add">
         <input type="text" id="quickKeyBottom" placeholder="Property key">
         <input type="text" id="quickValueBottom" placeholder="Property value">
         <button id="quickAddBtnBottom" class="add-property">Add Property</button>
-    </div>
+    </div> -->
 
     <div id="modalOverlay">
         <div id="editModal">
@@ -359,8 +359,11 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     try {
-                        const parsed = JSON.parse(e.target.result);
-                        currentData = Array.isArray(parsed) ? (parsed[0] || {}) : parsed;
+                        currentData = JSON.parse(e.target.result);
+                        if (Array.isArray(currentData)) {
+                            // If array is loaded, take first object or create empty
+                            currentData = currentData[0] || {};
+                        }
                         jsonText.value = JSON.stringify(currentData, null, 2);
                         renderProperties();
                         showMessage('File loaded successfully', 'success');
@@ -403,8 +406,10 @@
             
             function validateAndRender() {
                 try {
-                    const parsed = JSON.parse(jsonText.value);
-                    currentData = Array.isArray(parsed) ? (parsed[0] || {}) : parsed;
+                    currentData = JSON.parse(jsonText.value);
+                    if (Array.isArray(currentData)) {
+                        currentData = currentData[0] || {};
+                    }
                     renderProperties();
                     showMessage('Valid JSON', 'success');
                 } catch (error) {
@@ -430,7 +435,7 @@
                     
                     const valueDiv = document.createElement('div');
                     valueDiv.className = 'property-value';
-                    valueDiv.textContent = typeof value === 'string' ? value : JSON.stringify(value);
+                    valueDiv.textContent = JSON.stringify(value);
                     
                     const actionsDiv = document.createElement('div');
                     actionsDiv.className = 'property-actions';
@@ -455,6 +460,7 @@
             }
             
             function quickAddProperty(source) {
+                // Determine which fields to use based on source
                 const keyInput = source === 'top' ? quickKeyTop : quickKeyBottom;
                 const valueInput = source === 'top' ? quickValueTop : quickValueBottom;
                 
@@ -467,6 +473,7 @@
                 }
                 
                 try {
+                    // Parse value if it looks like JSON, otherwise keep as string
                     let parsedValue;
                     try {
                         parsedValue = value ? JSON.parse(value) : value;
@@ -474,10 +481,12 @@
                         parsedValue = value;
                     }
                     
+                    // Add property
                     currentData[key] = parsedValue;
                     jsonText.value = JSON.stringify(currentData, null, 2);
                     renderProperties();
                     
+                    // Clear input fields
                     keyInput.value = '';
                     valueInput.value = '';
                     
@@ -491,11 +500,7 @@
                 currentEditKey = key;
                 modalTitle.textContent = 'Edit Property';
                 editKey.value = key;
-                
-                // Display the value properly in the textarea
-                const value = currentData[key];
-                editValue.value = typeof value === 'string' ? value : JSON.stringify(value, null, 2);
-                
+                editValue.value = JSON.stringify(currentData[key]);
                 showModal();
             }
             
@@ -510,10 +515,10 @@
             
             function saveProperty() {
                 try {
-                    const newKey = editKey.value.trim();
+                    const key = editKey.value.trim();
                     const valueStr = editValue.value.trim();
                     
-                    if (!newKey) {
+                    if (!key) {
                         showMessage('Property name cannot be empty', 'error');
                         return;
                     }
@@ -521,24 +526,23 @@
                     // Parse value if it looks like JSON, otherwise keep as string
                     let value;
                     try {
-                        value = valueStr ? JSON.parse(valueStr) : valueStr;
+                        value = valueStr ? JSON.parse(valueStr) : '';
                     } catch {
                         value = valueStr;
                     }
                     
-                    // Remove the old property if key was changed
-                    if (currentEditKey && newKey !== currentEditKey) {
+                    if (currentEditKey !== null && key !== currentEditKey) {
+                        // Key changed - delete old key
                         delete currentData[currentEditKey];
                     }
                     
-                    // Add/update the property
-                    currentData[newKey] = value;
+                    currentData[key] = value;
                     jsonText.value = JSON.stringify(currentData, null, 2);
                     renderProperties();
                     hideModal();
-                    showMessage('Property saved', 'success');
+                    showMessage('Changes saved', 'success');
                 } catch (error) {
-                    showMessage('Error saving property: ' + error.message, 'error');
+                    showMessage('Error saving: ' + error.message, 'error');
                 }
             }
             
@@ -549,7 +553,6 @@
             
             function hideModal() {
                 modalOverlay.style.display = 'none';
-                currentEditKey = null;
             }
             
             function showMessage(text, type) {
